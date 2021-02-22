@@ -1,7 +1,8 @@
 # Car Rental Agency
 
-<p align="center">Basic CRUD project for learn NestJS with Typescript. Front-end was made with React</p>
+<p align="center">Car agency System develpoment. Front-end was made with React, Backend with Nest</p>
 ### Tech Stack
+
 
 - 🟥**NestJs** — Progressive Node.js Framework
 - 📄 **TypeORM** — A Promise-Based Node.js ORM
