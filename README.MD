@@ -1,9 +1,6 @@
 # Car Rental Agency
 
 <p align="center">Basic CRUD project for learn NestJS with Typescript. Front-end was made with React</p>
-
-![app-gif](https://github.com/OLucho/tasks-management/blob/master/docs/doc.gif?raw=true)
-
 ### Tech Stack
 
 - 🟥**NestJs** — Progressive Node.js Framework
