@@ -1,8 +1,7 @@
 # Car Rental Agency
 
-<p align="center">Car agency System develpoment. Front-end was made with React, Backend with Nest</p>
+<p align="center">Car agency System development. Front-end was made with React, Backend with Nest</p>
 ### Tech Stack
-
 
 - 🟥**NestJs** — Progressive Node.js Framework
 - 📄 **TypeORM** — A Promise-Based Node.js ORM
