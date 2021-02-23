@@ -9,7 +9,9 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { Client } from './client.entity';
 import { ClientService } from './client.service';
+import { CreateClientDto } from './dto/create.client.dto';
 @Controller('client')
 export class ClientController {
   constructor(private clientService: ClientService) {}
