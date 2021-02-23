@@ -37,13 +37,13 @@ export class Reservation extends BaseEntity {
   updated_at: Date;
 }
 
-enum ReservationStatus {
+export enum ReservationStatus {
   PENDING = 'PENDING',
   PAID = 'PAID',
   FINISHED = 'FINISHED',
 }
 
-enum ReservationPaymentMethod {
+export enum ReservationPaymentMethod {
   CASH = 'CASH',
   CREDIT_CARD = 'CREDIT_CARD',
 }
