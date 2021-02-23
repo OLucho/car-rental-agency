@@ -1,6 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateReservationDto } from './dto/create.Reservation.dto';
-import { Reservation } from './reservation.entity';
+import { Reservation, ReservationStatus } from './reservation.entity';
 
 @EntityRepository(Reservation)
 export class ReservationRepository extends Repository<Reservation> {
@@ -12,8 +12,6 @@ export class ReservationRepository extends Repository<Reservation> {
       paymentMethod,
       pricePerDay,
       startDate,
-      status,
-      totalPrice,
     } = createReservationDto;
 
     const reservation = new Reservation();
@@ -21,8 +19,8 @@ export class ReservationRepository extends Repository<Reservation> {
     reservation.paymentMethod = paymentMethod;
     reservation.pricePerDay = pricePerDay;
     reservation.startDate = startDate;
-    reservation.status = status;
-    reservation.totalPrice = totalPrice;
+    reservation.status = ReservationStatus.PENDING;
+    reservation.totalPrice = pricePerDay;
 
     await reservation.save();
     return reservation;
