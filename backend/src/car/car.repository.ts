@@ -4,7 +4,7 @@ import { CreateCarDto } from './dto/create.car.dto';
 
 @EntityRepository(Car)
 export class CarRepository extends Repository<Car> {
-  async createCar(createCarDto: CreateCarDto) {
+  async createCar(createCarDto: CreateCarDto): Promise<Car> {
     const {
       air_conditioning,
       brand,
