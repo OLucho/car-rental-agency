@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
   UsePipes,
   ValidationPipe,
@@ -14,7 +15,12 @@ export class CarController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  createCar(@Body() createCarDto: CreateCarDto): Promise<Car> {
-    return this.carService.createCar(createCarDto);
+  async createCar(@Body() createCarDto: CreateCarDto): Promise<Car> {
+    return await this.carService.createCar(createCarDto);
+  }
+
+  @Get()
+  async getAllCars(): Promise<Car[]> {
+    return await this.carService.getAllCars();
   }
 }

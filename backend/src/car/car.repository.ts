@@ -30,4 +30,9 @@ export class CarRepository extends Repository<Car> {
     await car.save();
     return car;
   }
+
+  async getAllCars(): Promise<Car[]> {
+    const query = this.createQueryBuilder('car');
+    return query.getMany();
+  }
 }

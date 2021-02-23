@@ -13,4 +13,8 @@ export class CarService {
   async createCar(createCarDto: CreateCarDto): Promise<Car> {
     return await this.carRepository.createCar(createCarDto);
   }
+
+  async getAllCars(): Promise<Car[]> {
+    return await this.carRepository.getAllCars();
+  }
 }
