@@ -3,11 +3,9 @@ dotenv.config();
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfig } from './config/db.config';
-import { CarController } from './car/car.controller';
+import { CarModule } from './car/car.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(TypeOrmConfig)],
-  controllers: [CarController],
-  providers: [],
+  imports: [TypeOrmModule.forRoot(TypeOrmConfig), CarModule],
 })
 export class AppModule {}
