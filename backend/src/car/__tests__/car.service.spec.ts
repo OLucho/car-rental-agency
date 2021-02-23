@@ -1,3 +1,4 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { CarRepository } from '../car.repository';
 import { CarService } from '../car.service';
@@ -7,7 +8,6 @@ const mockCarRepository = () => ({
   createCar: jest.fn(),
   getAllCars: jest.fn(),
   findOne: jest.fn(),
-  deleteCarById: jest.fn(),
   delete: jest.fn(),
 });
 
@@ -22,10 +22,13 @@ const createCarDto: CreateCarDto = {
   image: 'string',
   air_conditioning: 'string',
 };
-
+/**
+ * @param  {CarService} 'CarService'
+ * @param  {CarRepository} "carRepository"
+ */
 describe('CarService', () => {
-  let carService: CarService;
-  let carRepository: CarRepository;
+  let carService;
+  let carRepository;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -40,7 +43,7 @@ describe('CarService', () => {
   });
 
   describe('Create Car', () => {
-    it('Create Car calls Repository', async () => {
+    it('Calls Repository', async () => {
       await carService.createCar(createCarDto);
       expect(carRepository.createCar).toHaveBeenCalledTimes(1);
       expect(carRepository.createCar).toHaveBeenCalledWith(createCarDto);
@@ -48,14 +51,48 @@ describe('CarService', () => {
   });
 
   describe('Get All Car', () => {
-    it('Get All Cars calls Repository', async () => {
+    it('Calls Repository', async () => {
       await carService.getAllCars();
       expect(carRepository.getAllCars).toHaveBeenCalledTimes(1);
       expect(carRepository.getAllCars).toHaveBeenCalledWith();
     });
   });
 
-  describe('Delete Car', () => {});
+  describe('Delete Car', () => {
+    it('Delete Car calls calls repository and deletes a car successfully', async () => {
+      carRepository.delete.mockResolvedValue({ affected: 1 });
+      await carService.deleteCarById(1);
+      expect(carRepository.delete).toHaveBeenCalledTimes(1);
+      expect(carRepository.delete).toHaveBeenCalledWith(1);
+    });
 
-  describe('Create Car', () => {});
+    it('Calls Repository and throws NotFoundException if Car is not found', async () => {
+      carRepository.delete.mockResolvedValue({ affected: 0 });
+      await expect(carService.deleteCarById(1)).rejects.toThrow(
+        NotFoundException,
+      );
+      expect(carRepository.delete).toHaveBeenCalledTimes(1);
+      expect(carRepository.delete).toHaveBeenCalledWith(1);
+    });
+  });
+
+  describe('Get car By Id', () => {
+    it('Calls Repository and returns the car sucessfully', async () => {
+      carRepository.findOne.mockResolvedValue({});
+      const id = 1;
+      await carService.getCarById(id);
+      expect(carRepository.findOne).toHaveBeenCalledTimes(1);
+      expect(carRepository.findOne).toHaveBeenCalledWith({ where: { id } });
+    });
+
+    it('Calls Repository and throws NotFoundException if car was not found', async () => {
+      carRepository.findOne.mockResolvedValue(undefined);
+      const id = 1;
+      await expect(carService.getCarById(id)).rejects.toThrow(
+        NotFoundException,
+      );
+      expect(carRepository.findOne).toHaveBeenCalledTimes(1);
+      expect(carRepository.findOne).toHaveBeenCalledWith({ where: { id } });
+    });
+  });
 });
