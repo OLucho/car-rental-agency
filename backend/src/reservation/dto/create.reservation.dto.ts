@@ -1,4 +1,5 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsIn, IsNotEmpty } from 'class-validator';
+import { ReservationPaymentMethod } from '../reservation.entity';
 
 export class CreateReservationDto {
   @IsNotEmpty()
@@ -11,11 +12,6 @@ export class CreateReservationDto {
   pricePerDay;
 
   @IsNotEmpty()
-  totalPrice;
-
-  @IsNotEmpty()
+  @IsIn(Object.values(ReservationPaymentMethod))
   paymentMethod;
-
-  @IsNotEmpty()
-  status;
 }
