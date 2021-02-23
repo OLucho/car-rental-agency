@@ -1,8 +1,8 @@
 # Car Rental Agency
 
 <p align="center">Car agency System development. Front-end was made with React, Backend with Nest</p>
-### Tech Stack
 
+### Tech Stack
 - 🟥**NestJs** — Progressive Node.js Framework
 - 📄 **TypeORM** — A Promise-Based Node.js ORM
 - 🟦 **TypeScript** — An open-source language which builds on JavaScript by adding static type definitions.
