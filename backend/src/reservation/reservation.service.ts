@@ -14,9 +14,14 @@ export class ReservationService {
   async createReservation(
     createReservationDto: CreateReservationDto,
   ): Promise<Reservation> {
-    return await this.reservationRepository.createReservation(
+    const { startDate, finishDate } = createReservationDto;
+    const totalDays = this.calculateTotalDays(startDate, finishDate);
+
+    const reservation = await this.reservationRepository.createReservation(
       createReservationDto,
+      totalDays,
     );
+    return reservation;
   }
 
   async getAllReservations(): Promise<Reservation[]> {
@@ -40,5 +45,15 @@ export class ReservationService {
     if (result.affected === 0) {
       throw new NotFoundException(`Task with ID ${id} not found`);
     }
+  }
+
+  private calculateTotalDays(startDate, finishDate) {
+    const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    const firstDate = new Date(startDate);
+    const secondDate = new Date(finishDate); // "year,month,day" => FORMAT
+
+    return Math.round(
+      Math.abs((firstDate.valueOf() - secondDate.valueOf()) / oneDay),
+    );
   }
 }

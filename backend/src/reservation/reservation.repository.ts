@@ -6,6 +6,7 @@ import { Reservation, ReservationStatus } from './reservation.entity';
 export class ReservationRepository extends Repository<Reservation> {
   async createReservation(
     createReservationDto: CreateReservationDto,
+    totalDays,
   ): Promise<Reservation> {
     const {
       finishDate,
@@ -20,8 +21,8 @@ export class ReservationRepository extends Repository<Reservation> {
     reservation.pricePerDay = pricePerDay;
     reservation.startDate = startDate;
     reservation.status = ReservationStatus.PENDING;
-    reservation.totalPrice = pricePerDay;
-
+    reservation.totalPrice = pricePerDay * totalDays;
+    reservation.totalDays = totalDays;
     await reservation.save();
     return reservation;
   }

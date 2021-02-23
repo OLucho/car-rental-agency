@@ -13,13 +13,16 @@ export class Reservation extends BaseEntity {
   id: number;
 
   @Column()
-  startDate: Date;
+  startDate: string;
 
   @Column()
-  finishDate: Date;
+  finishDate: string;
 
   @Column()
   pricePerDay: number;
+
+  @Column()
+  totalDays: number;
 
   @Column()
   totalPrice: number;
