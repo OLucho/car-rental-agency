@@ -26,4 +26,12 @@ export class CarService {
 
     return car;
   }
+
+  async deleteCarById(id: number) {
+    const result = await this.carRepository.delete(id);
+
+    if (result.affected === 0) {
+      throw new NotFoundException(`Task with ID ${id} not found`);
+    }
+  }
 }

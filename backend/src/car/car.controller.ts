@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -29,5 +30,10 @@ export class CarController {
   @Get('/:id')
   async getCarById(@Param('id', ParseIntPipe) id: number): Promise<Car> {
     return await this.carService.getCarById(id);
+  }
+
+  @Delete('/:id')
+  async deleteCarById(@Param('id', ParseIntPipe) id: number) {
+    return await this.carService.deleteCarById(id);
   }
 }
