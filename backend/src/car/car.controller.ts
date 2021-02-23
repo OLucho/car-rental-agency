@@ -2,6 +2,8 @@ import {
   Body,
   Controller,
   Get,
+  Param,
+  ParseIntPipe,
   Post,
   UsePipes,
   ValidationPipe,
@@ -22,5 +24,10 @@ export class CarController {
   @Get()
   async getAllCars(): Promise<Car[]> {
     return await this.carService.getAllCars();
+  }
+
+  @Get('/:id')
+  async getCarById(@Param('id', ParseIntPipe) id: number): Promise<Car> {
+    return await this.carService.getCarById(id);
   }
 }
