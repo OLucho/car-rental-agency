@@ -13,19 +13,19 @@ export class Reservation extends BaseEntity {
   id: number;
 
   @Column()
-  startDate;
+  startDate: Date;
 
   @Column()
-  finishDate;
+  finishDate: Date;
 
   @Column()
-  pricePerDay;
+  pricePerDay: number;
 
   @Column()
-  totalPrice;
+  totalPrice: number;
 
   @Column()
-  paymentMethod;
+  paymentMethod: ReservationPaymentMethod;
 
   @Column()
   status: ReservationStatus;
@@ -41,4 +41,9 @@ enum ReservationStatus {
   PENDING = 'PENDING',
   PAID = 'PAID',
   FINISHED = 'FINISHED',
+}
+
+enum ReservationPaymentMethod {
+  CASH = 'CASH',
+  CREDIT_CARD = 'CREDIT_CARD',
 }
