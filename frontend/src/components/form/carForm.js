@@ -1,11 +1,13 @@
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
+import { Alert } from '@material-ui/lab';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useState } from 'react';
 import { useCar } from '../../hooks/useCar';
+import AlertError from '../error';
 
 export default function CarForm() {
   const initialState = {
@@ -21,10 +23,12 @@ export default function CarForm() {
   };
   const [open, setOpen] = useState(false);
   const [car, setCar] = useState(initialState);
-  const { createCar } = useCar();
+  const { createCar, error, setError } = useCar();
+
   const handleClickOpen = () => {
     setCar(initialState);
     setOpen(true);
+    setError(false);
   };
 
   const handleClose = () => {
@@ -32,8 +36,10 @@ export default function CarForm() {
   };
 
   const handleCreateCar = () => {
-    // setOpen(false);
     createCar(car);
+    if (error) {
+      handleClose();
+    }
   };
 
   const handleChange = (e) => {
@@ -46,9 +52,13 @@ export default function CarForm() {
         Create New Car!
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title" style={{ display: 'flex', alignItems: 'center' }}>
-          Create Car
-        </DialogTitle>
+        <DialogTitle id="form-dialog-title">Create Car</DialogTitle>
+
+        {!error ? (
+          <Alert severity="warning">All inputs are required</Alert>
+        ) : (
+          <AlertError error={error} />
+        )}
 
         <DialogContent>
           <TextField
