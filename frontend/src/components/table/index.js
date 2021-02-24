@@ -9,10 +9,15 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
+  },
+  button: {
+    background: 'blue',
+    color: 'white',
   },
 });
 
@@ -37,6 +42,9 @@ export default function BasicTable({ thData, tbData }) {
                   {el}
                 </TableCell>
               ))}
+              <Button size="small" className={classes.button}>
+                Details
+              </Button>
             </TableRow>
           ))}
         </TableBody>
