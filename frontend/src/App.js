@@ -1,5 +1,5 @@
+import Providers from './hooks/providers';
 import Routes from './routes';
-import Providers from './store/providers';
 
 function App() {
   return (
