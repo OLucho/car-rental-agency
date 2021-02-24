@@ -19,8 +19,6 @@ const thRow = [
   'price',
   'image',
   'air_conditioning',
-  'created_at',
-  'updated_at',
 ];
 const useStyles = makeStyles({
   title: {
