@@ -6,6 +6,7 @@ export const CarContext = createContext();
 
 export function CarProvider({ children }) {
   const [cars, setCars] = useState([]);
+  const [car, setCar] = useState({});
 
   const getAllCars = useCallback(async () => {
     try {
@@ -18,8 +19,19 @@ export function CarProvider({ children }) {
     }
   }, []);
 
+  const createCar = useCallback(async (carToSave) => {
+    try {
+      const res = await api.post(`/car`, carToSave);
+      setCar(res.data);
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  }, []);
+
   return (
-    <CarContext.Provider value={{ cars, setCars, getAllCars }}>{children}</CarContext.Provider>
+    <CarContext.Provider value={{ cars, setCars, getAllCars, createCar, car }}>
+      {children}
+    </CarContext.Provider>
   );
 }
 
