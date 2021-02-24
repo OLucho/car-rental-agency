@@ -6,7 +6,7 @@ export const CarContext = createContext();
 
 export function CarProvider({ children }) {
   const [cars, setCars] = useState([]);
-  const [car, setCar] = useState({});
+  const [car, setCar] = useState('');
 
   const getAllCars = useCallback(async () => {
     try {
