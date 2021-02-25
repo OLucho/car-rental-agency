@@ -46,15 +46,15 @@ export function CarProvider({ children }) {
     <CarContext.Provider
       value={{
         cars,
+        car,
+        error,
+        status,
         setCars,
         getAllCars,
         createCar,
-        car,
-        error,
         setError,
         getCarById,
         setCar,
-        status,
         setStatus,
       }}
     >
