@@ -32,11 +32,11 @@ const useStyles = makeStyles({
 export default function CarsPage() {
   const classes = useStyles();
 
-  const { getAllCars, cars, car: newCar, setCar } = useCar();
+  const { getAllCars, cars, status, setStatus } = useCar();
   useEffect(() => {
-    setCar('');
+    setStatus('');
     getAllCars();
-  }, [getAllCars]);
+  }, [getAllCars, setStatus]);
 
   const tbData = cars.map((car) => Object.values(car));
   return (
@@ -45,9 +45,9 @@ export default function CarsPage() {
       <div className={classes.title}>
         <h1>Cars Management</h1>
         <h3>There are {cars.length} cars</h3>
-        {newCar && (
+        {status && (
           <Alert className={classes.alert} severity="success">
-            New car has been created correctly with id: {newCar.id}
+            New car has been created correctly with id: {status.id}
           </Alert>
         )}
         <CarForm />
