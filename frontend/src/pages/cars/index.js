@@ -32,8 +32,9 @@ const useStyles = makeStyles({
 export default function CarsPage() {
   const classes = useStyles();
 
-  const { getAllCars, cars, car: newCar } = useCar();
+  const { getAllCars, cars, car: newCar, setCar } = useCar();
   useEffect(() => {
+    setCar('');
     getAllCars();
   }, [getAllCars]);
 
