@@ -29,9 +29,19 @@ export function CarProvider({ children }) {
       setError(err.response.data.message);
     }
   }, []);
-  console.log(error);
+
+  const getCarById = useCallback(async (carId) => {
+    try {
+      const res = await api.get(`/car/${carId}`);
+      setCar(res.data);
+    } catch (err) {
+      setError(err.response.data.message);
+    }
+  }, []);
   return (
-    <CarContext.Provider value={{ cars, setCars, getAllCars, createCar, car, error, setError }}>
+    <CarContext.Provider
+      value={{ cars, setCars, getAllCars, createCar, car, error, setError, getCarById, setCar }}
+    >
       {children}
     </CarContext.Provider>
   );
