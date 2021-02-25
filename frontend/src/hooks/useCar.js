@@ -21,18 +21,14 @@ export function CarProvider({ children }) {
     }
   }, []);
 
-  const createCar = useCallback(
-    async (carToSave) => {
-      try {
-        const res = await api.post(`/car`, carToSave);
-        setCar(res.data);
-        setStatus(car);
-      } catch (err) {
-        setError(err.response.data.message);
-      }
-    },
-    [car]
-  );
+  const createCar = useCallback(async (carToSave) => {
+    try {
+      const res = await api.post(`/car`, carToSave);
+      setStatus(res.data);
+    } catch (err) {
+      setError(err.response.data.message);
+    }
+  }, []);
 
   const getCarById = useCallback(async (carId) => {
     try {
