@@ -24,7 +24,7 @@ export function CarProvider({ children }) {
   const createCar = useCallback(async (carToSave) => {
     try {
       const res = await api.post(`/car`, carToSave);
-      setStatus(res.data);
+      setStatus(`New car has been created with id ${res.data.id}`);
     } catch (err) {
       setError(err.response.data.message);
     }
@@ -34,6 +34,15 @@ export function CarProvider({ children }) {
     try {
       const res = await api.get(`/car/${carId}`);
       setCar(res.data);
+    } catch (err) {
+      setError(err.response.data.message);
+    }
+  }, []);
+
+  const deleteCar = useCallback(async (carId) => {
+    try {
+      await api.delete(`/car/${carId}`);
+      setStatus(`Car with id ${carId} was deleted`);
     } catch (err) {
       setError(err.response.data.message);
     }
@@ -50,6 +59,7 @@ export function CarProvider({ children }) {
         createCar,
         setError,
         getCarById,
+        deleteCar,
         setCar,
         setStatus,
       }}
