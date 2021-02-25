@@ -30,69 +30,36 @@ const useStyles = makeStyles({
 export default function BasicTable({ thData, tbData, type }) {
   const classes = useStyles();
 
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleDelete = (type, id) => {
-    console.log(type, id);
-  };
-
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
             {thData.map((th) => (
-              <TableCell key={th}>{th}</TableCell>
+              <TableCell align="center" key={th}>
+                {th}
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {tbData.map((row) => (
-            <TableRow>
-              {row.map((el) => (
-                <TableCell component="th" scope="row">
-                  {el}
-                </TableCell>
-              ))}
-
-              <div className={classes.button}>
-                <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                  Actions
-                </Button>
-                <Menu
-                  id="simple-menu"
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={Boolean(anchorEl)}
-                  onClose={handleClose}
-                >
-                  <MenuItem onClick={handleClose}>
-                    <Button variant="contained" color="primary">
-                      <Link to={`/${type}/${row[0]}`} className={classes.anchor}>
+          {tbData.map((item) => (
+            <>
+              <TableRow>
+                {item.map((row) => (
+                  <TableCell align="center">{row}</TableCell>
+                ))}
+                <>
+                  <div>
+                    <Button className={classes.button}>
+                      <Link to={`/${type}/${item[0]}`} className={classes.anchor}>
                         See Details
                       </Link>
                     </Button>
-                  </MenuItem>
-                  <MenuItem>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => handleDelete(type, row[0])}
-                    >
-                      Delete
-                    </Button>
-                  </MenuItem>
-                </Menu>
-              </div>
-            </TableRow>
+                  </div>
+                </>
+              </TableRow>
+            </>
           ))}
         </TableBody>
       </Table>
