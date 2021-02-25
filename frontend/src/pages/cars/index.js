@@ -51,7 +51,11 @@ export default function CarsPage() {
         )}
         <CarForm />
       </div>
-      {cars.length > 0 ? <Table thData={thRow} tbData={tbData} /> : <p>There are no cars</p>}
+      {cars.length > 0 ? (
+        <Table thData={thRow} tbData={tbData} type="car" />
+      ) : (
+        <p>There are no cars</p>
+      )}
     </>
   );
 }

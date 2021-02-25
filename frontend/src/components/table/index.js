@@ -10,6 +10,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
   table: {
@@ -21,7 +22,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function BasicTable({ thData, tbData }) {
+export default function BasicTable({ thData, tbData, type }) {
   const classes = useStyles();
 
   return (
@@ -42,9 +43,11 @@ export default function BasicTable({ thData, tbData }) {
                   {el}
                 </TableCell>
               ))}
-              <Button size="small" className={classes.button}>
-                Details
-              </Button>
+              <Link to={`/${type}/${row[0]}`}>
+                <Button size="small" className={classes.button} id={row[0]}>
+                  Details
+                </Button>
+              </Link>
             </TableRow>
           ))}
         </TableBody>
