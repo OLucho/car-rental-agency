@@ -37,7 +37,7 @@ export default function CarForm() {
 
   const handleCreateCar = () => {
     createCar(car);
-    if (error) {
+    if (!error) {
       handleClose();
     }
   };
