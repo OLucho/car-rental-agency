@@ -1,8 +1,10 @@
+import { Client } from 'src/client/client.entity';
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -32,6 +34,11 @@ export class Reservation extends BaseEntity {
 
   @Column()
   status: ReservationStatus;
+
+  @ManyToOne(() => Client, (client) => client.reservations, {
+    eager: false,
+  })
+  client: Client;
 
   @CreateDateColumn({ select: false })
   created_at: Date;
