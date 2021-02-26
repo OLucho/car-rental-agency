@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   UsePipes,
   ValidationPipe,
@@ -32,6 +33,14 @@ export class ClientController {
   @Get('/:id')
   async getClientById(@Param('id', ParseIntPipe) id: number): Promise<Client> {
     return await this.clientService.getClientById(id);
+  }
+
+  @Patch('/:id')
+  async updateClient(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateClientDto: CreateClientDto,
+  ): Promise<Client> {
+    return await this.clientService.updateClient(id, updateClientDto);
   }
 
   @Delete('/:id')

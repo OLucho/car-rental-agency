@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   UsePipes,
   ValidationPipe,
@@ -37,6 +38,17 @@ export class ReservationController {
     @Param('id', ParseIntPipe) id: number,
   ): Promise<Reservation> {
     return await this.reservationService.getReservationById(id);
+  }
+
+  @Patch('/:id')
+  async updateReservation(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateReservationDto: CreateReservationDto,
+  ): Promise<Reservation> {
+    return await this.reservationService.updateReservation(
+      id,
+      updateReservationDto,
+    );
   }
 
   @Delete('/:id')

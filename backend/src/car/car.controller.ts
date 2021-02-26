@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   UsePipes,
   ValidationPipe,
@@ -30,6 +31,14 @@ export class CarController {
   @Get('/:id')
   async getCarById(@Param('id', ParseIntPipe) id: number): Promise<Car> {
     return await this.carService.getCarById(id);
+  }
+
+  @Patch('/:id')
+  async updateCar(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateCarDto: CreateCarDto,
+  ): Promise<Car> {
+    return await this.carService.updateCar(id, updateCarDto);
   }
 
   @Delete('/:id')
