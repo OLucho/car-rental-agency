@@ -72,7 +72,7 @@ export function CarProvider({ children }) {
 export function useCar() {
   const context = useContext(CarContext);
   if (!context) {
-    throw new Error('use Auth must be used within a SearchProvider  ');
+    throw new Error('use Car must be used within a CarProvider  ');
   }
   return context;
 }
