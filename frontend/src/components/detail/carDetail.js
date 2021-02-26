@@ -2,6 +2,7 @@ import { Button, Container, makeStyles, TextField } from '@material-ui/core';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useCar } from '../../hooks/useCar';
+import CarForm from '../form/carForm';
 
 const useStyles = makeStyles({
   title: {
@@ -9,6 +10,10 @@ const useStyles = makeStyles({
   },
   input: {
     margin: '1rem 0',
+  },
+  buttons: {
+    display: 'flex',
+    justifyContent: 'space-around',
   },
 });
 export default function CarDetail({ id }) {
@@ -107,9 +112,12 @@ export default function CarDetail({ id }) {
           autoComplete="off"
         />
 
-        <Button variant="contained" color="secondary" onClick={handleDelete}>
-          Delete Car
-        </Button>
+        <div className={classes.buttons}>
+          <CarForm carToUpdate={car} />
+          <Button variant="contained" color="secondary" onClick={handleDelete}>
+            Delete Car
+          </Button>
+        </div>
       </form>
     </Container>
   );

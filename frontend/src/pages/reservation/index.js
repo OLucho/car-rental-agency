@@ -37,7 +37,7 @@ export default function ReservationsPage() {
     getAllReservations();
   }, [getAllReservations, setStatus, status]);
 
-  const tbData = reservations.map((car) => Object.values(car));
+  const tbData = reservations.map((reservation) => Object.values(reservation));
   return (
     <>
       <Header />
