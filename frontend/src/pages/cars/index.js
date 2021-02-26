@@ -34,9 +34,8 @@ export default function CarsPage() {
 
   const { getAllCars, cars, status, setStatus } = useCar();
   useEffect(() => {
-    setStatus('');
     getAllCars();
-  }, [getAllCars, setStatus]);
+  }, [getAllCars, setStatus, status]);
 
   const tbData = cars.map((car) => Object.values(car));
   return (
@@ -47,16 +46,12 @@ export default function CarsPage() {
         <h3>There are {cars.length} cars</h3>
         {status && (
           <Alert className={classes.alert} severity="success">
-            New car has been created correctly with id: {status.id}
+            {status}
           </Alert>
         )}
         <CarForm />
       </div>
-      {cars.length > 0 ? (
-        <Table thData={thRow} tbData={tbData} type="car" />
-      ) : (
-        <p>There are no cars</p>
-      )}
+      {cars.length > 0 && <Table thData={thRow} tbData={tbData} type="car" />}
     </>
   );
 }
