@@ -9,16 +9,16 @@ import { useCar } from '../../hooks/useCar';
 import CarForm from '../../components/form/carForm';
 
 const thRow = [
-  'id',
-  'brand',
-  'model',
-  'year',
-  'kms',
-  'color',
-  'passengers',
+  'ID',
+  'Brand',
+  'Model',
+  'Year',
+  'Kms',
+  'Color',
+  'Amount Of Passengers',
   'price',
   'image',
-  'air_conditioning',
+  'Has Air Conditioning?',
 ];
 const useStyles = makeStyles({
   title: {
@@ -26,6 +26,8 @@ const useStyles = makeStyles({
   },
   alert: {
     margin: '1rem 0',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 
