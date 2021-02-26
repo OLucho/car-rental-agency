@@ -26,6 +26,10 @@ const useStyles = makeStyles({
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  buttons: {
+    display: 'flex',
+    justifyContent: 'space-around',
+  },
 });
 
 export default function ClientsPage() {
@@ -37,7 +41,7 @@ export default function ClientsPage() {
     getAllClients();
   }, [getAllClients, setStatus, status]);
 
-  const tbData = clients.map((car) => Object.values(car));
+  const tbData = clients.map((client) => Object.values(client));
   return (
     <>
       <Header />
@@ -50,7 +54,7 @@ export default function ClientsPage() {
           </Alert>
         )}
         {error && <AlertError error={error} />}
-        <ClientForm />
+        <ClientForm isUpdate={false} />
       </div>
       {clients.length > 0 && <Table thData={thRow} tbData={tbData} type="client" />}
     </>

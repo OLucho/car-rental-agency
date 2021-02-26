@@ -39,6 +39,25 @@ export class ReservationService {
     return Reservation;
   }
 
+  async updateReservation(
+    id: number,
+    updateReservationDto: CreateReservationDto,
+  ): Promise<Reservation> {
+    const {
+      finishDate,
+      paymentMethod,
+      pricePerDay,
+      startDate,
+    } = updateReservationDto;
+    const reservation = await this.getReservationById(id);
+    reservation.startDate = startDate;
+    reservation.finishDate = finishDate;
+    reservation.paymentMethod = paymentMethod;
+    reservation.pricePerDay = pricePerDay;
+    await reservation.save();
+    return reservation;
+  }
+
   async deleteReservationById(id: number) {
     const result = await this.reservationRepository.delete(id);
 

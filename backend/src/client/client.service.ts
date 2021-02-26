@@ -28,6 +28,29 @@ export class ClientService {
     return client;
   }
 
+  async updateClient(id: number, updateClientDto): Promise<Client> {
+    const {
+      address,
+      dni,
+      email,
+      firstName,
+      lastName,
+      nationality,
+      phoneNumber,
+    } = updateClientDto;
+    const client = await this.getClientById(id);
+
+    client.address = address;
+    client.dni = dni;
+    client.email = email;
+    client.firstName = firstName;
+    client.lastName = lastName;
+    client.nationality = nationality;
+    client.phoneNumber = phoneNumber;
+    await client.save();
+    return client;
+  }
+
   async deleteClientById(id: number) {
     const result = await this.clientRepository.delete(id);
 

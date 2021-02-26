@@ -2,6 +2,7 @@ import { Button, Container, makeStyles, TextField } from '@material-ui/core';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useCar } from '../../hooks/useCar';
+import CarForm from '../form/carForm';
 
 const useStyles = makeStyles({
   title: {
@@ -10,11 +11,15 @@ const useStyles = makeStyles({
   input: {
     margin: '1rem 0',
   },
+  buttons: {
+    display: 'flex',
+    justifyContent: 'space-around',
+  },
 });
 export default function CarDetail({ id }) {
   const classes = useStyles();
   const history = useHistory();
-  const { car, getCarById, deleteCar } = useCar();
+  const { car, getCarById, deleteCar, error } = useCar();
 
   useEffect(() => {
     getCarById(id);
@@ -29,6 +34,10 @@ export default function CarDetail({ id }) {
     }
   };
 
+  if (error) {
+    history.push('/cars');
+  }
+
   return (
     <Container>
       <div className={classes.title}>
@@ -37,83 +46,78 @@ export default function CarDetail({ id }) {
 
       <form>
         <TextField
-          required
+          inputProps={{ readOnly: true }}
           className={classes.input}
           id="brand"
           label="Brand"
           fullWidth
           autoComplete="off"
           autoFocus
-          defaultValue={car.brand}
           value={car.brand}
         />
         <TextField
-          required
+          inputProps={{ readOnly: true }}
           className={classes.input}
           label="Model"
           fullWidth
           autoComplete="off"
-          defaultValue={car.model}
           value={car.model}
         />
         <TextField
-          required
+          inputProps={{ readOnly: true }}
           className={classes.input}
           label="Year"
           fullWidth
           autoComplete="off"
-          defaultValue={car.year}
           value={car.year}
         />
         <TextField
-          required
+          inputProps={{ readOnly: true }}
           className={classes.input}
           label="Kilometers"
           fullWidth
           autoComplete="off"
-          defaultValue={car.kms}
           value={car.kms}
         />
         <TextField
-          required
+          inputProps={{ readOnly: true }}
           className={classes.input}
           label="Price"
           fullWidth
           autoComplete="off"
-          defaultValue={car.price}
           value={car.passengers}
         />
         <TextField
-          required
+          inputProps={{ readOnly: true }}
           className={classes.input}
           label="Amount of Passengers"
           fullWidth
           autoComplete="off"
-          defaultValue={car.passengers}
           value={car.passengers}
         />
         <TextField
-          required
+          inputProps={{ readOnly: true }}
           className={classes.input}
           label="Colors"
           fullWidth
           autoComplete="off"
-          defaultValue={car.color}
           value={car.color}
         />
         <TextField
-          required
+          inputProps={{ readOnly: true }}
           className={classes.input}
           label="Air_conditioning"
           fullWidth
           value={car.air_conditioning}
           autoComplete="off"
-          defaultValue={car.air_conditioning}
         />
 
-        <Button variant="contained" color="secondary" onClick={handleDelete}>
-          Delete Car
-        </Button>
+        <div className={classes.buttons}>
+          <CarForm carToUpdate={car} />
+          <Button variant="contained" color="secondary" onClick={handleDelete}>
+            Delete Car
+          </Button>
+        </div>
       </form>
     </Container>
   );

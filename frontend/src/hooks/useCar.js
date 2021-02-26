@@ -39,6 +39,15 @@ export function CarProvider({ children }) {
     }
   }, []);
 
+  const updateCar = useCallback(async (carId, carToUpdate) => {
+    try {
+      await api.patch(`/car/${carId}`, carToUpdate);
+      setStatus(`Car with id ${carId} was updated`);
+    } catch (err) {
+      setError(err.response.data.message);
+    }
+  }, []);
+
   const deleteCar = useCallback(async (carId) => {
     try {
       await api.delete(`/car/${carId}`);
@@ -62,6 +71,7 @@ export function CarProvider({ children }) {
         deleteCar,
         setCar,
         setStatus,
+        updateCar,
       }}
     >
       {children}

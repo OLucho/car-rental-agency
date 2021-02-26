@@ -26,7 +26,32 @@ export class CarService {
 
     return car;
   }
+  async updateCar(id: number, updateCarDto: CreateCarDto): Promise<Car> {
+    const {
+      air_conditioning,
+      brand,
+      color,
+      image,
+      kms,
+      model,
+      passengers,
+      price,
+      year,
+    } = updateCarDto;
+    const car = await this.getCarById(id);
 
+    car.air_conditioning = air_conditioning;
+    car.brand = brand;
+    car.color = color;
+    car.image = image;
+    car.model = model;
+    car.kms = kms;
+    car.passengers = passengers;
+    car.price = price;
+    car.year = year;
+    await car.save();
+    return car;
+  }
   async deleteCarById(id: number) {
     const result = await this.carRepository.delete(id);
 

@@ -53,7 +53,7 @@ export default function CarsPage() {
           </Alert>
         )}
         {error && <AlertError error={error} />}
-        <CarForm />
+        <CarForm isUpdate={false} />
       </div>
       {cars.length > 0 && <Table thData={thRow} tbData={tbData} type="car" />}
     </>

@@ -9,8 +9,9 @@ import { useState } from 'react';
 import { useCar } from '../../hooks/useCar';
 import AlertError from '../error';
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 
-export default function CarForm() {
+export default function CarForm({ carToUpdate }) {
   const initialState = {
     brand: '',
     model: '',
@@ -24,7 +25,8 @@ export default function CarForm() {
   };
   const [open, setOpen] = useState(false);
   const [car, setCar] = useState(initialState);
-  const { createCar, error, setError } = useCar();
+  const { createCar, error, setError, updateCar } = useCar();
+  const history = useHistory();
 
   const handleClickOpen = () => {
     setError(false);
@@ -38,7 +40,12 @@ export default function CarForm() {
 
   const handleCreateCar = (e) => {
     e.preventDefault();
-    createCar(car);
+    if (carToUpdate) {
+      updateCar(carToUpdate.id, car);
+      history.push('/cars');
+    } else {
+      createCar(car);
+    }
     if (!error) {
       handleClose();
     }
@@ -50,11 +57,13 @@ export default function CarForm() {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Create New Car!
+      <Button variant="contained" color="primary" onClick={handleClickOpen}>
+        {carToUpdate ? 'Update new Car!' : 'Create New Car!'}
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Create Car</DialogTitle>
+        <DialogTitle id="form-dialog-title">
+          {carToUpdate ? 'Update new Car!' : 'Create New Car!'}
+        </DialogTitle>
 
         {!error ? (
           <Alert severity="warning" style={{ fontWeight: 'bold', textAlign: 'center' }}>
@@ -182,7 +191,7 @@ export default function CarForm() {
               Cancel
             </Button>
             <Button type="submit" color="secondary">
-              Create
+              Submit
             </Button>
           </DialogActions>
         </form>

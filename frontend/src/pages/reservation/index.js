@@ -37,7 +37,7 @@ export default function ReservationsPage() {
     getAllReservations();
   }, [getAllReservations, setStatus, status]);
 
-  const tbData = reservations.map((car) => Object.values(car));
+  const tbData = reservations.map((reservation) => Object.values(reservation));
   return (
     <>
       <Header />
@@ -50,7 +50,7 @@ export default function ReservationsPage() {
           </Alert>
         )}
         {error && <AlertError error={error} />}
-        <ReservationForm />
+        <ReservationForm isUpdate={false} />
       </div>
       {reservations.length > 0 && <Table thData={thRow} tbData={tbData} type="reservation" />}
     </>

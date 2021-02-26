@@ -1,7 +1,6 @@
 import {
   Button,
   Container,
-  DialogActions,
   DialogContent,
   FormControl,
   FormControlLabel,
@@ -14,6 +13,7 @@ import {
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useReservation } from '../../hooks/useReservations';
+import ReservationForm from '../form/reservationForm';
 
 const useStyles = makeStyles({
   title: {
@@ -22,11 +22,15 @@ const useStyles = makeStyles({
   input: {
     margin: '1rem 0',
   },
+  buttons: {
+    display: 'flex',
+    justifyContent: 'space-around',
+  },
 });
 export default function ReservationDetail({ id }) {
   const classes = useStyles();
   const history = useHistory();
-  const { reservation, getReservationById, deleteReservation } = useReservation();
+  const { reservation, getReservationById, deleteReservation, error } = useReservation();
 
   useEffect(() => {
     getReservationById(id);
@@ -41,6 +45,10 @@ export default function ReservationDetail({ id }) {
     }
   };
 
+  if (error) {
+    history.push('/reservations');
+  }
+
   return (
     <Container>
       <div className={classes.title}>
@@ -50,6 +58,7 @@ export default function ReservationDetail({ id }) {
       <form>
         <DialogContent>
           <TextField
+            inputProps={{ readOnly: true }}
             autoFocus
             margin="dense"
             id="startDate"
@@ -57,28 +66,27 @@ export default function ReservationDetail({ id }) {
             type="text"
             name="startDate"
             value={reservation.startDate}
-            autoComplete="off"
             fullWidth
             required
           />
           <TextField
+            inputProps={{ readOnly: true }}
             margin="dense"
             id="finishDate"
             required
             label="Finishing Date"
             type="text"
             value={reservation.finishDate}
-            autoComplete="off"
             fullWidth
           />
           <TextField
+            inputProps={{ readOnly: true }}
             margin="dense"
             id="pricePerDay"
             required
             label="Price Per Day"
             type="text"
             value={reservation.pricePerDay}
-            autoComplete="off"
             fullWidth
           />
 
@@ -104,9 +112,12 @@ export default function ReservationDetail({ id }) {
           </FormControl>
         </DialogContent>
 
-        <Button variant="contained" color="secondary" onClick={handleDelete}>
-          Delete Reservation
-        </Button>
+        <div className={classes.buttons}>
+          <ReservationForm reservationToUpdate={reservation} />
+          <Button variant="contained" color="secondary" onClick={handleDelete}>
+            Delete Reservation
+          </Button>
+        </div>
       </form>
     </Container>
   );

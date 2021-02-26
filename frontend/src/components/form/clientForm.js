@@ -8,8 +8,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { useState } from 'react';
 import { useClient } from '../../hooks/useClient';
 import AlertError from '../error';
+import { useHistory } from 'react-router-dom';
 
-export default function ClientForm() {
+export default function ClientForm({ clientToUpdate }) {
   const initialState = {
     firstName: '',
     lastName: '',
@@ -19,9 +20,12 @@ export default function ClientForm() {
     dni: '',
     email: '',
   };
+  const history = useHistory();
+
   const [open, setOpen] = useState(false);
-  const [client, setClient] = useState(initialState);
-  const { createClient, error, setError } = useClient();
+  const [client, setClient] = useState(clientToUpdate ? clientToUpdate : initialState);
+
+  const { createClient, error, setError, updateClient } = useClient();
 
   const handleClickOpen = () => {
     setError(false);
@@ -35,7 +39,12 @@ export default function ClientForm() {
 
   const handleCreateClient = (e) => {
     e.preventDefault();
-    createClient(client);
+    if (clientToUpdate) {
+      updateClient(clientToUpdate.id, client);
+      history.push('/clients');
+    } else {
+      createClient(client);
+    }
     if (!error) {
       handleClose();
     }
@@ -44,14 +53,15 @@ export default function ClientForm() {
   const handleChange = (e) => {
     setClient({ ...client, [e.target.id]: e.target.value });
   };
-
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Create New Client!
+      <Button variant="contained" color="primary" onClick={handleClickOpen}>
+        {clientToUpdate ? 'Update new Client' : 'Create New Client'}
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Create Client</DialogTitle>
+        <DialogTitle id="form-dialog-title">
+          {clientToUpdate ? 'Update new Client' : 'Create New Client'}
+        </DialogTitle>
 
         {!error ? (
           <Alert severity="warning" style={{ fontWeight: 'bold', textAlign: 'center' }}>
@@ -103,7 +113,7 @@ export default function ClientForm() {
               id="phoneNumber"
               required
               label="Phone Number"
-              type="text"
+              type="number"
               value={client.phoneNumber}
               onChange={(e) => handleChange(e)}
               autoComplete="off"
@@ -148,7 +158,7 @@ export default function ClientForm() {
               Cancel
             </Button>
             <Button type="submit" color="secondary">
-              Create
+              Submit
             </Button>
           </DialogActions>
         </form>

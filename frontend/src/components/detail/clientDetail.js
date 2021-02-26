@@ -2,6 +2,7 @@ import { Button, Container, makeStyles, TextField } from '@material-ui/core';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useClient } from '../../hooks/useClient';
+import ClientForm from '../form/clientForm';
 
 const useStyles = makeStyles({
   title: {
@@ -10,11 +11,15 @@ const useStyles = makeStyles({
   input: {
     margin: '1rem 0',
   },
+  buttons: {
+    display: 'flex',
+    justifyContent: 'space-around',
+  },
 });
 export default function ClientDetail({ id }) {
   const classes = useStyles();
   const history = useHistory();
-  const { client, getClientById, deleteClient } = useClient();
+  const { client, getClientById, deleteClient, error } = useClient();
 
   useEffect(() => {
     getClientById(id);
@@ -28,6 +33,9 @@ export default function ClientDetail({ id }) {
       console.log(error);
     }
   };
+  if (error) {
+    history.push('/clients');
+  }
   return (
     <Container>
       <div className={classes.title}>
@@ -36,65 +44,56 @@ export default function ClientDetail({ id }) {
 
       <form>
         <TextField
-          required
+          inputProps={{ readOnly: true }}
           className={classes.input}
           id="first-name"
           label="First Name"
           fullWidth
-          autoComplete="off"
           autoFocus
-          defaultValue={client.firstName}
           value={client.firstName}
         />
         <TextField
-          required
+          inputProps={{ readOnly: true }}
           className={classes.input}
           label="Last Name"
           fullWidth
-          autoComplete="off"
-          defaultValue={client.lastName}
           value={client.lastName}
         />
         <TextField
-          required
+          inputProps={{ readOnly: true }}
           className={classes.input}
           label="Nationality"
           fullWidth
-          autoComplete="off"
-          defaultValue={client.nationality}
           value={client.nationality}
         />
         <TextField
-          required
+          inputProps={{ readOnly: true }}
           className={classes.input}
           label="Address"
           fullWidth
-          autoComplete="off"
-          defaultValue={client.address}
           value={client.address}
         />
         <TextField
-          required
+          inputProps={{ readOnly: true }}
           className={classes.input}
           label="Phone number"
           fullWidth
-          autoComplete="off"
-          defaultValue={client.phoneNumber}
           value={client.phoneNumber}
         />
         <TextField
-          required
+          inputProps={{ readOnly: true }}
           className={classes.input}
           label="Email"
           fullWidth
-          autoComplete="off"
-          defaultValue={client.email}
           value={client.email}
         />
 
-        <Button variant="contained" color="secondary" onClick={handleDelete}>
-          Delete Client
-        </Button>
+        <div className={classes.buttons}>
+          <ClientForm clientToUpdate={client} />
+          <Button variant="contained" color="secondary" onClick={handleDelete}>
+            Delete Client
+          </Button>
+        </div>
       </form>
     </Container>
   );
