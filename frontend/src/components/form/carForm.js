@@ -8,6 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { useState } from 'react';
 import { useCar } from '../../hooks/useCar';
 import AlertError from '../error';
+import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@material-ui/core';
 
 export default function CarForm() {
   const initialState = {
@@ -37,7 +38,7 @@ export default function CarForm() {
 
   const handleCreateCar = () => {
     createCar(car);
-    if (!error) {
+    if (error) {
       handleClose();
     }
   };
@@ -45,6 +46,7 @@ export default function CarForm() {
   const handleChange = (e) => {
     setCar({ ...car, [e.target.id]: e.target.value });
   };
+  console.log(car);
 
   return (
     <div>
@@ -143,17 +145,34 @@ export default function CarForm() {
             autoComplete="off"
             fullWidth
           />
-          <TextField
-            margin="dense"
-            id="air_conditioning"
-            required
-            label="Has Air Conditioning?"
-            type="text"
-            value={car.air_conditioning}
-            onChange={(e) => handleChange(e)}
-            autoComplete="off"
-            fullWidth
-          />
+          <FormControl component="fieldset">
+            <FormLabel component="legend">Has Air Conditioning?</FormLabel>
+            <RadioGroup row aria-label="position" id="air_conditioning">
+              <FormControlLabel
+                value="yes"
+                id="air_conditioning"
+                control={<Radio color="primary" id="air_conditioning" />}
+                label="Yes"
+                labelPlacement="start"
+                name="air_conditioning"
+                onChange={(e) => handleChange(e)}
+              />
+              <FormControlLabel
+                value="no"
+                control={
+                  <Radio
+                    color="primary"
+                    name="air_conditioning"
+                    id="air_conditioning"
+                    onChange={(e) => handleChange(e)}
+                  />
+                }
+                label="No"
+                labelPlacement="start"
+                name="air_conditioning"
+              />
+            </RadioGroup>
+          </FormControl>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
