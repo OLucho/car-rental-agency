@@ -11,6 +11,10 @@ const useStyles = makeStyles({
   input: {
     margin: '1rem 0',
   },
+  buttons: {
+    display: 'flex',
+    justifyContent: 'space-around',
+  },
 });
 export default function ClientDetail({ id }) {
   const classes = useStyles();
