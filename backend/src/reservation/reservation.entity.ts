@@ -33,10 +33,10 @@ export class Reservation extends BaseEntity {
   @Column()
   status: ReservationStatus;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ select: false })
   created_at: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ select: false })
   updated_at: Date;
 }
 
