@@ -27,18 +27,19 @@ export default function CarForm() {
   const { createCar, error, setError } = useCar();
 
   const handleClickOpen = () => {
+    setError(false);
     setCar(initialState);
     setOpen(true);
-    setError(false);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const handleCreateCar = () => {
+  const handleCreateCar = (e) => {
+    e.preventDefault();
     createCar(car);
-    if (error) {
+    if (!error) {
       handleClose();
     }
   };
@@ -46,7 +47,6 @@ export default function CarForm() {
   const handleChange = (e) => {
     setCar({ ...car, [e.target.id]: e.target.value });
   };
-  console.log(car);
 
   return (
     <div>
@@ -57,131 +57,135 @@ export default function CarForm() {
         <DialogTitle id="form-dialog-title">Create Car</DialogTitle>
 
         {!error ? (
-          <Alert severity="warning">All inputs are required</Alert>
+          <Alert severity="warning" style={{ fontWeight: 'bold', textAlign: 'center' }}>
+            All inputs are required
+          </Alert>
         ) : (
           <AlertError error={error} />
         )}
 
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="brand"
-            label="Brand"
-            type="text"
-            name="brand"
-            value={car.brand}
-            onChange={(e) => handleChange(e)}
-            autoComplete="off"
-            fullWidth
-            required
-          />
-          <TextField
-            margin="dense"
-            id="model"
-            required
-            label="Model"
-            type="text"
-            value={car.model}
-            onChange={(e) => handleChange(e)}
-            autoComplete="off"
-            fullWidth
-          />
-          <TextField
-            margin="dense"
-            id="year"
-            required
-            label="Year"
-            type="number"
-            min="0"
-            value={car.year}
-            onChange={(e) => handleChange(e)}
-            autoComplete="off"
-            fullWidth
-          />{' '}
-          <TextField
-            margin="dense"
-            id="kms"
-            required
-            label="Kms"
-            type="text"
-            value={car.kms}
-            onChange={(e) => handleChange(e)}
-            autoComplete="off"
-            fullWidth
-          />{' '}
-          <TextField
-            margin="dense"
-            id="price"
-            required
-            label="Price"
-            type="number"
-            min="0"
-            value={car.price}
-            onChange={(e) => handleChange(e)}
-            autoComplete="off"
-            fullWidth
-          />{' '}
-          <TextField
-            margin="dense"
-            id="passengers"
-            required
-            label="Amount of passengers"
-            type="number"
-            min="0"
-            value={car.passengers}
-            onChange={(e) => handleChange(e)}
-            autoComplete="off"
-            fullWidth
-          />{' '}
-          <TextField
-            margin="dense"
-            id="color"
-            required
-            label="Colors"
-            type="text"
-            value={car.color}
-            onChange={(e) => handleChange(e)}
-            autoComplete="off"
-            fullWidth
-          />
-          <FormControl component="fieldset">
-            <FormLabel component="legend">Has Air Conditioning?</FormLabel>
-            <RadioGroup row aria-label="position" id="air_conditioning">
-              <FormControlLabel
-                value="yes"
-                id="air_conditioning"
-                control={<Radio color="primary" id="air_conditioning" />}
-                label="Yes"
-                labelPlacement="start"
-                name="air_conditioning"
-                onChange={(e) => handleChange(e)}
-              />
-              <FormControlLabel
-                value="no"
-                control={
-                  <Radio
-                    color="primary"
-                    name="air_conditioning"
-                    id="air_conditioning"
-                    onChange={(e) => handleChange(e)}
-                  />
-                }
-                label="No"
-                labelPlacement="start"
-                name="air_conditioning"
-              />
-            </RadioGroup>
-          </FormControl>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleCreateCar} color="secondary">
-            Create
-          </Button>
-        </DialogActions>
+        <form onSubmit={handleCreateCar}>
+          <DialogContent>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="brand"
+              label="Brand"
+              type="text"
+              name="brand"
+              value={car.brand}
+              onChange={(e) => handleChange(e)}
+              autoComplete="off"
+              fullWidth
+              required
+            />
+            <TextField
+              margin="dense"
+              id="model"
+              required
+              label="Model"
+              type="text"
+              value={car.model}
+              onChange={(e) => handleChange(e)}
+              autoComplete="off"
+              fullWidth
+            />
+            <TextField
+              margin="dense"
+              id="year"
+              required
+              label="Year"
+              type="number"
+              min="0"
+              value={car.year}
+              onChange={(e) => handleChange(e)}
+              autoComplete="off"
+              fullWidth
+            />{' '}
+            <TextField
+              margin="dense"
+              id="kms"
+              required
+              label="Kms"
+              type="text"
+              value={car.kms}
+              onChange={(e) => handleChange(e)}
+              autoComplete="off"
+              fullWidth
+            />{' '}
+            <TextField
+              margin="dense"
+              id="price"
+              required
+              label="Price"
+              type="number"
+              min="0"
+              value={car.price}
+              onChange={(e) => handleChange(e)}
+              autoComplete="off"
+              fullWidth
+            />{' '}
+            <TextField
+              margin="dense"
+              id="passengers"
+              required
+              label="Amount of passengers"
+              type="number"
+              min="0"
+              value={car.passengers}
+              onChange={(e) => handleChange(e)}
+              autoComplete="off"
+              fullWidth
+            />{' '}
+            <TextField
+              margin="dense"
+              id="color"
+              required
+              label="Colors"
+              type="text"
+              value={car.color}
+              onChange={(e) => handleChange(e)}
+              autoComplete="off"
+              fullWidth
+            />
+            <FormControl component="fieldset">
+              <FormLabel component="legend">Has Air Conditioning?</FormLabel>
+              <RadioGroup row aria-label="position" id="air_conditioning">
+                <FormControlLabel
+                  value="yes"
+                  id="air_conditioning"
+                  control={<Radio color="primary" id="air_conditioning" />}
+                  label="Yes"
+                  labelPlacement="start"
+                  name="air_conditioning"
+                  onChange={(e) => handleChange(e)}
+                />
+                <FormControlLabel
+                  value="no"
+                  control={
+                    <Radio
+                      color="primary"
+                      name="air_conditioning"
+                      id="air_conditioning"
+                      onChange={(e) => handleChange(e)}
+                    />
+                  }
+                  label="No"
+                  labelPlacement="start"
+                  name="air_conditioning"
+                />
+              </RadioGroup>
+            </FormControl>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Cancel
+            </Button>
+            <Button type="submit" color="secondary">
+              Create
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </div>
   );
