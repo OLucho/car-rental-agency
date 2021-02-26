@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,7 +9,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Button, Menu, MenuItem } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
@@ -25,6 +25,10 @@ const useStyles = makeStyles({
     textDecoration: 'none',
     color: 'white',
   },
+  th: {
+    fontWeight: 'bold',
+    fontSize: '1.1rem',
+  },
 });
 
 export default function BasicTable({ thData, tbData, type }) {
@@ -36,7 +40,7 @@ export default function BasicTable({ thData, tbData, type }) {
         <TableHead>
           <TableRow>
             {thData.map((th) => (
-              <TableCell align="center" key={th}>
+              <TableCell align="center" key={th} className={classes.th}>
                 {th}
               </TableCell>
             ))}
