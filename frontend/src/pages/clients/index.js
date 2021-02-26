@@ -3,8 +3,6 @@ import { useEffect } from 'react';
 import { Alert } from '@material-ui/lab';
 import Header from '../../components/header';
 import Table from '../../components/table';
-import { useCar } from '../../hooks/useCar';
-import CarForm from '../../components/form/carForm';
 import AlertError from '../../components/error/alertError';
 import { useClient } from '../../hooks/useClient';
 import ClientForm from '../../components/form/clientForm';

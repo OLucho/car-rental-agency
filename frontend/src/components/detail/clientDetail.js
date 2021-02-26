@@ -28,7 +28,6 @@ export default function ClientDetail({ id }) {
       console.log(error);
     }
   };
-  console.log(client);
   return (
     <Container>
       <div className={classes.title}>
