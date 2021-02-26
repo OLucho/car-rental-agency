@@ -1,5 +1,9 @@
 import { CarProvider } from './useCar';
-
+import { ClientProvider } from './useClient';
 export default function Providers({ children }) {
-  return <CarProvider>{children}</CarProvider>;
+  return (
+    <ClientProvider>
+      <CarProvider>{children}</CarProvider>
+    </ClientProvider>
+  );
 }

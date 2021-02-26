@@ -6,18 +6,18 @@ import Table from '../../components/table';
 import { useCar } from '../../hooks/useCar';
 import CarForm from '../../components/form/carForm';
 import AlertError from '../../components/error/alertError';
+import { useClient } from '../../hooks/useClient';
+import ClientForm from '../../components/form/clientForm';
 
 const thRow = [
   'ID',
-  'Brand',
-  'Model',
-  'Year',
-  'Kms',
-  'Color',
-  'Amount Of Passengers',
-  'price',
-  'image',
-  'Has Air Conditioning?',
+  'First Name',
+  'Last Name',
+  'Nationality',
+  'Address',
+  'Phone Number',
+  'D.N.I',
+  'Email',
 ];
 const useStyles = makeStyles({
   title: {
@@ -33,11 +33,11 @@ const useStyles = makeStyles({
 export default function ClientsPage() {
   const classes = useStyles();
 
-  const { getAllCars, clients, status, setStatus, error } = useClient();
+  const { getAllClients, clients, status, setStatus, error } = useClient();
 
   useEffect(() => {
-    getAllCars();
-  }, [getAllCars, setStatus, status]);
+    getAllClients();
+  }, [getAllClients, setStatus, status]);
 
   const tbData = clients.map((car) => Object.values(car));
   return (
@@ -52,9 +52,9 @@ export default function ClientsPage() {
           </Alert>
         )}
         {error && <AlertError error={error} />}
-        <CarForm />
+        <ClientForm />
       </div>
-      {clients.length > 0 && <Table thData={thRow} tbData={tbData} type="car" />}
+      {clients.length > 0 && <Table thData={thRow} tbData={tbData} type="client" />}
     </>
   );
 }
