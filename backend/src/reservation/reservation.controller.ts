@@ -10,13 +10,17 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { ClientService } from 'src/client/client.service';
 import { CreateReservationDto } from './dto/create.reservation.dto';
 import { Reservation } from './reservation.entity';
 import { ReservationService } from './reservation.service';
 
 @Controller('reservation')
 export class ReservationController {
-  constructor(private reservationService: ReservationService) {}
+  constructor(
+    private reservationService: ReservationService,
+    private clientService: ClientService,
+  ) {}
 
   @Post()
   @UsePipes(ValidationPipe)
