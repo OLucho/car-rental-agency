@@ -47,6 +47,15 @@ export function ReservationProvider({ children }) {
       setError(err.response.data.message);
     }
   }, []);
+
+  const updateReservation = useCallback(async (reservationId, reservationToUpdate) => {
+    try {
+      await api.patch(`/reservation/${reservationId}`, reservationToUpdate);
+      setStatus(`Reservation with id ${reservationId} was updated`);
+    } catch (err) {
+      setError(err.response.data.message);
+    }
+  }, []);
   return (
     <ReservationContext.Provider
       value={{
@@ -61,6 +70,7 @@ export function ReservationProvider({ children }) {
         getReservationById,
         deleteReservation,
         setReservation,
+        updateReservation,
         setStatus,
       }}
     >

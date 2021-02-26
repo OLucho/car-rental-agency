@@ -1,7 +1,6 @@
 import {
   Button,
   Container,
-  DialogActions,
   DialogContent,
   FormControl,
   FormControlLabel,
@@ -14,6 +13,7 @@ import {
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useReservation } from '../../hooks/useReservations';
+import ReservationForm from '../form/reservationForm';
 
 const useStyles = makeStyles({
   title: {
@@ -21,6 +21,10 @@ const useStyles = makeStyles({
   },
   input: {
     margin: '1rem 0',
+  },
+  buttons: {
+    display: 'flex',
+    justifyContent: 'space-around',
   },
 });
 export default function ReservationDetail({ id }) {
@@ -108,9 +112,12 @@ export default function ReservationDetail({ id }) {
           </FormControl>
         </DialogContent>
 
-        <Button variant="contained" color="secondary" onClick={handleDelete}>
-          Delete Reservation
-        </Button>
+        <div className={classes.buttons}>
+          <ReservationForm reservationToUpdate={reservation} />
+          <Button variant="contained" color="secondary" onClick={handleDelete}>
+            Delete Reservation
+          </Button>
+        </div>
       </form>
     </Container>
   );

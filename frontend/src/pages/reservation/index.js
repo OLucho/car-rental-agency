@@ -50,7 +50,7 @@ export default function ReservationsPage() {
           </Alert>
         )}
         {error && <AlertError error={error} />}
-        <ReservationForm />
+        <ReservationForm isUpdate={false} />
       </div>
       {reservations.length > 0 && <Table thData={thRow} tbData={tbData} type="reservation" />}
     </>

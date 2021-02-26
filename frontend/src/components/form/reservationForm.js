@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -10,20 +11,19 @@ import { useReservation } from '../../hooks/useReservations';
 import AlertError from '../error';
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@material-ui/core';
 
-export default function ReservationForm() {
+export default function ReservationForm({ reservationToUpdate }) {
   const initialState = {
-    firstName: '',
-    lastName: '',
-    nationality: '',
-    address: '',
-    phoneNumber: '',
-    dni: '',
-    email: '',
+    startDate: '',
+    finishDate: '',
+    pricePerDay: '',
+    paymentMethod: '',
   };
   const [open, setOpen] = useState(false);
-  const [reservation, setReservation] = useState(initialState);
-  const { createReservation, error, setError } = useReservation();
-
+  const [reservation, setReservation] = useState(
+    !reservationToUpdate ? initialState : reservationToUpdate
+  );
+  const history = useHistory();
+  const { createReservation, error, setError, updateReservation } = useReservation();
   const handleClickOpen = () => {
     setError(false);
     setReservation(initialState);
@@ -34,9 +34,14 @@ export default function ReservationForm() {
     setOpen(false);
   };
 
-  const handleCreateReservation = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    createReservation(reservation);
+    if (reservationToUpdate) {
+      updateReservation(reservationToUpdate.id, reservation);
+      history.push('/reservations');
+    } else {
+      createReservation(reservation);
+    }
     if (!error) {
       handleClose();
     }
@@ -45,11 +50,10 @@ export default function ReservationForm() {
   const handleChange = (e) => {
     setReservation({ ...reservation, [e.target.id]: e.target.value });
   };
-
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Create New Reservation!
+      <Button variant="contained" color="primary" onClick={handleClickOpen}>
+        {reservationToUpdate ? 'Update new Reservation!' : 'Create New Reservation!'}
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Create Reservation</DialogTitle>
@@ -62,7 +66,7 @@ export default function ReservationForm() {
           <AlertError error={error} />
         )}
 
-        <form onSubmit={handleCreateReservation}>
+        <form onSubmit={handleSubmit}>
           <DialogContent>
             <TextField
               autoFocus
@@ -134,7 +138,7 @@ export default function ReservationForm() {
               Cancel
             </Button>
             <Button type="submit" color="secondary">
-              Create
+              Submit
             </Button>
           </DialogActions>
         </form>
