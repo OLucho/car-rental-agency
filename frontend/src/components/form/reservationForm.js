@@ -56,7 +56,9 @@ export default function ReservationForm({ reservationToUpdate }) {
         {reservationToUpdate ? 'Update new Reservation!' : 'Create New Reservation!'}
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Create Reservation</DialogTitle>
+        <DialogTitle id="form-dialog-title">
+          {reservationToUpdate ? 'Update new Reservation' : 'Create New Reservation!'}
+        </DialogTitle>
 
         {!error ? (
           <Alert severity="warning" style={{ fontWeight: 'bold', textAlign: 'center' }}>

@@ -47,6 +47,15 @@ export function ClientProvider({ children }) {
       setError(err.response.data.message);
     }
   }, []);
+
+  const updateClient = useCallback(async (clientId, clientToUpdate) => {
+    try {
+      await api.patch(`/client/${clientId}`, clientToUpdate);
+      setStatus(`Client with id ${clientId} was updated`);
+    } catch (err) {
+      setError(err.response.data.message);
+    }
+  }, []);
   return (
     <ClientContext.Provider
       value={{
@@ -60,6 +69,7 @@ export function ClientProvider({ children }) {
         setError,
         getClientById,
         deleteClient,
+        updateClient,
         setClient,
         setStatus,
       }}

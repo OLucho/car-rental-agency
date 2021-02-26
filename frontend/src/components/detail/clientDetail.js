@@ -2,6 +2,7 @@ import { Button, Container, makeStyles, TextField } from '@material-ui/core';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useClient } from '../../hooks/useClient';
+import ClientForm from '../form/clientForm';
 
 const useStyles = makeStyles({
   title: {
@@ -83,9 +84,12 @@ export default function ClientDetail({ id }) {
           value={client.email}
         />
 
-        <Button variant="contained" color="secondary" onClick={handleDelete}>
-          Delete Client
-        </Button>
+        <div className={classes.buttons}>
+          <ClientForm clientToUpdate={client} />
+          <Button variant="contained" color="secondary" onClick={handleDelete}>
+            Delete Client
+          </Button>
+        </div>
       </form>
     </Container>
   );
