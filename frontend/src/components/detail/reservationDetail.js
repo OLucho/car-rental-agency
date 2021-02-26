@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 export default function ReservationDetail({ id }) {
   const classes = useStyles();
   const history = useHistory();
-  const { reservation, getReservationById, deleteReservation } = useReservation();
+  const { reservation, getReservationById, deleteReservation, error } = useReservation();
 
   useEffect(() => {
     getReservationById(id);
@@ -41,6 +41,10 @@ export default function ReservationDetail({ id }) {
     }
   };
 
+  if (error) {
+    history.push('/reservations');
+  }
+
   return (
     <Container>
       <div className={classes.title}>
@@ -50,6 +54,7 @@ export default function ReservationDetail({ id }) {
       <form>
         <DialogContent>
           <TextField
+            inputProps={{ readOnly: true }}
             autoFocus
             margin="dense"
             id="startDate"
@@ -57,28 +62,27 @@ export default function ReservationDetail({ id }) {
             type="text"
             name="startDate"
             value={reservation.startDate}
-            autoComplete="off"
             fullWidth
             required
           />
           <TextField
+            inputProps={{ readOnly: true }}
             margin="dense"
             id="finishDate"
             required
             label="Finishing Date"
             type="text"
             value={reservation.finishDate}
-            autoComplete="off"
             fullWidth
           />
           <TextField
+            inputProps={{ readOnly: true }}
             margin="dense"
             id="pricePerDay"
             required
             label="Price Per Day"
             type="text"
             value={reservation.pricePerDay}
-            autoComplete="off"
             fullWidth
           />
 
