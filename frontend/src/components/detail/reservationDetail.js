@@ -1,17 +1,8 @@
-import {
-  Button,
-  Container,
-  DialogContent,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  makeStyles,
-  Radio,
-  RadioGroup,
-  TextField,
-} from '@material-ui/core';
+import { Button, Container, DialogContent, makeStyles, TextField } from '@material-ui/core';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useCar } from '../../hooks/useCar';
+import { useClient } from '../../hooks/useClient';
 import { useReservation } from '../../hooks/useReservations';
 import ReservationForm from '../form/reservationForm';
 
@@ -31,10 +22,14 @@ export default function ReservationDetail({ id }) {
   const classes = useStyles();
   const history = useHistory();
   const { reservation, getReservationById, deleteReservation, error } = useReservation();
+  const { getClientById, client } = useClient();
+  const { getCarById, car } = useCar();
 
   useEffect(() => {
     getReservationById(id);
-  }, [id, getReservationById]);
+    getClientById(reservation.clientId);
+    getCarById(reservation.carId);
+  }, [id, getReservationById, getCarById, getClientById]);
 
   const handleDelete = () => {
     try {
@@ -48,7 +43,7 @@ export default function ReservationDetail({ id }) {
   if (error) {
     history.push('/reservations');
   }
-
+  console.log(car);
   return (
     <Container>
       <div className={classes.title}>
@@ -67,13 +62,11 @@ export default function ReservationDetail({ id }) {
             name="startDate"
             value={reservation.startDate}
             fullWidth
-            required
           />
           <TextField
             inputProps={{ readOnly: true }}
             margin="dense"
             id="finishDate"
-            required
             label="Finishing Date"
             type="text"
             value={reservation.finishDate}
@@ -83,33 +76,61 @@ export default function ReservationDetail({ id }) {
             inputProps={{ readOnly: true }}
             margin="dense"
             id="pricePerDay"
-            required
             label="Price Per Day"
             type="text"
             value={reservation.pricePerDay}
             fullWidth
           />
 
-          <FormControl component="fieldset">
-            <FormLabel component="legend">Payment Method</FormLabel>
-            <RadioGroup row aria-label="position" id="paymentMethod">
-              <FormControlLabel
-                value="CREDIT_CARD"
-                id="paymentMethod"
-                control={<Radio color="primary" id="paymentMethod" />}
-                label="Credit Card"
-                labelPlacement="start"
-                name="paymentMethod"
-              />
-              <FormControlLabel
-                value="CASH"
-                control={<Radio color="primary" name="paymentMethod" id="paymentMethod" />}
-                label="Cash"
-                labelPlacement="start"
-                name="paymentMethod"
-              />
-            </RadioGroup>
-          </FormControl>
+          <TextField
+            inputProps={{ readOnly: true }}
+            margin="dense"
+            id="paymentMethod"
+            label="Payment Method"
+            type="text"
+            value={reservation.paymentMethod}
+            fullWidth
+          />
+
+          <TextField
+            inputProps={{ readOnly: true }}
+            margin="dense"
+            id="totalDays"
+            label="Total Days"
+            type="text"
+            value={reservation.totalDays}
+            fullWidth
+          />
+
+          <TextField
+            inputProps={{ readOnly: true }}
+            margin="dense"
+            id="totalPrice"
+            label="Final Price"
+            type="text"
+            value={`$${reservation.totalPrice}`}
+            fullWidth
+          />
+
+          <TextField
+            inputProps={{ readOnly: true }}
+            margin="dense"
+            id="client"
+            label="Client"
+            type="text"
+            value={`${client.firstName} ${client.lastName} ${client.phoneNumber} ${client.email} ${client.dni}`}
+            fullWidth
+          />
+
+          <TextField
+            inputProps={{ readOnly: true }}
+            margin="dense"
+            id="car"
+            label="Car"
+            type="text"
+            value={`${car.brand} ${car.model} ${car.year} $${car.price} `}
+            fullWidth
+          />
         </DialogContent>
 
         <div className={classes.buttons}>
