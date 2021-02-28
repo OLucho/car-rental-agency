@@ -56,11 +56,11 @@ export default function ClientForm({ clientToUpdate }) {
   return (
     <div>
       <Button variant="contained" color="primary" onClick={handleClickOpen}>
-        {clientToUpdate ? 'Update new Client' : 'Create New Client'}
+        {clientToUpdate ? 'Update Client' : 'Create New Client'}
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">
-          {clientToUpdate ? 'Update new Client' : 'Create New Client'}
+          {clientToUpdate ? 'Update Client' : 'Create New Client'}
         </DialogTitle>
 
         {!error ? (
