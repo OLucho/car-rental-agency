@@ -33,8 +33,10 @@ export default function ReservationDetail({ id }) {
 
   useEffect(() => {
     getReservationById(id);
-    getClientById(reservation.clientId);
-    getCarById(reservation.carId);
+    if (reservation) {
+      getClientById(reservation.clientId);
+      getCarById(reservation.carId);
+    }
   }, [id, getReservationById, getCarById, getClientById, reservation.carId, reservation.clientId]);
 
   const handleDelete = () => {
