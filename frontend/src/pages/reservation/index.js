@@ -16,6 +16,8 @@ const thRow = [
   'Total Price',
   'Payment Method',
   'Status',
+  'Client ID',
+  'Car ID',
 ];
 const useStyles = makeStyles({
   title: {
