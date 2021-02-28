@@ -17,8 +17,6 @@ export class ReservationRepository extends Repository<Reservation> {
       paymentMethod,
       pricePerDay,
       startDate,
-      carId,
-      clientId,
     } = createReservationDto;
 
     const reservation = new Reservation();
