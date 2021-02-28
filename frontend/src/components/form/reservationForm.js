@@ -68,7 +68,6 @@ export default function ReservationForm({ reservationToUpdate }) {
   const handleChange = (e) => {
     setReservation({ ...reservation, [e.target.id]: e.target.value });
   };
-  console.log(reservation);
   return (
     <div>
       <Button variant="contained" color="primary" onClick={handleClickOpen}>
