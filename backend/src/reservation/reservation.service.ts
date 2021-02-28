@@ -1,9 +1,13 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Car } from 'src/car/car.entity';
 import { Client } from 'src/client/client.entity';
 import { CreateReservationDto } from './dto/create.reservation.dto';
-import { Reservation } from './reservation.entity';
+import { Reservation, ReservationStatus } from './reservation.entity';
 import { ReservationRepository } from './reservation.repository';
 
 @Injectable()
@@ -61,6 +65,20 @@ export class ReservationService {
     reservation.paymentMethod = paymentMethod;
     reservation.pricePerDay = pricePerDay;
     await reservation.save();
+    return reservation;
+  }
+
+  async updateReservationStatus(
+    reservation: Reservation,
+    status: ReservationStatus,
+  ) {
+    if (status === ReservationStatus.PENDING) {
+      reservation.status = ReservationStatus.PAID;
+    } else if (status === ReservationStatus.PAID) {
+      reservation.status = ReservationStatus.FINISHED;
+    } else {
+      throw new InternalServerErrorException('Unexpected Error');
+    }
     return reservation;
   }
 
