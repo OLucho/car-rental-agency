@@ -1,9 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  MethodNotAllowedException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Car } from 'src/car/car.entity';
 import { Client } from 'src/client/client.entity';
 import { CreateReservationDto } from './dto/create.reservation.dto';
-import { Reservation } from './reservation.entity';
+import { Reservation, ReservationStatus } from './reservation.entity';
 import { ReservationRepository } from './reservation.repository';
 
 @Injectable()
@@ -70,6 +75,35 @@ export class ReservationService {
     if (result.affected === 0) {
       throw new NotFoundException(`Task with ID ${id} not found`);
     }
+  }
+
+  async updateReservationStatus(
+    reservation: Reservation,
+    status: ReservationStatus,
+  ) {
+    if (status === ReservationStatus.PENDING) {
+      return this.pay(reservation, status);
+    } else if (status === ReservationStatus.PAID) {
+      return this.finish(reservation, status);
+    }
+    return reservation;
+  }
+
+  private async pay(reservation: Reservation, status: ReservationStatus) {
+    if (reservation.status === status) {
+      reservation.status = ReservationStatus.PAID;
+    }
+    await reservation.save();
+    return reservation;
+  }
+
+  private async finish(reservation: Reservation, status: ReservationStatus) {
+    if (reservation.status !== status) {
+      throw new MethodNotAllowedException('Reservation is not paid');
+    }
+    reservation.status = ReservationStatus.FINISHED;
+    await reservation.save();
+    return reservation;
   }
 
   private calculateTotalDays(startDate, finishDate) {

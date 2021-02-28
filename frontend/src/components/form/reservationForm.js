@@ -71,11 +71,11 @@ export default function ReservationForm({ reservationToUpdate }) {
   return (
     <div>
       <Button variant="contained" color="primary" onClick={handleClickOpen}>
-        {reservationToUpdate ? 'Update new Reservation!' : 'Create New Reservation!'}
+        {reservationToUpdate ? 'Update Reservation!' : 'Create New Reservation!'}
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">
-          {reservationToUpdate ? 'Update new Reservation' : 'Create New Reservation!'}
+          {reservationToUpdate ? 'Update Reservation' : 'Create New Reservation!'}
         </DialogTitle>
 
         {!error ? (

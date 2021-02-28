@@ -13,7 +13,7 @@ import {
 import { CarService } from 'src/car/car.service';
 import { ClientService } from 'src/client/client.service';
 import { CreateReservationDto } from './dto/create.reservation.dto';
-import { Reservation } from './reservation.entity';
+import { Reservation, ReservationStatus } from './reservation.entity';
 import { ReservationService } from './reservation.service';
 
 @Controller('reservation')
@@ -59,6 +59,18 @@ export class ReservationController {
     return await this.reservationService.updateReservation(
       id,
       updateReservationDto,
+    );
+  }
+
+  @Patch('/:id/status')
+  async updateReservationStatus(
+    @Param('id', ParseIntPipe) id: number,
+    @Body('status') status: ReservationStatus,
+  ) {
+    const reservation = await this.reservationService.getReservationById(id);
+    return await this.reservationService.updateReservationStatus(
+      reservation,
+      status,
     );
   }
 

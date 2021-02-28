@@ -58,11 +58,11 @@ export default function CarForm({ carToUpdate }) {
   return (
     <div>
       <Button variant="contained" color="primary" onClick={handleClickOpen}>
-        {carToUpdate ? 'Update new Car!' : 'Create New Car!'}
+        {carToUpdate ? 'Update Car!' : 'Create New Car!'}
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">
-          {carToUpdate ? 'Update new Car!' : 'Create New Car!'}
+          {carToUpdate ? 'Update Car!' : 'Create New Car!'}
         </DialogTitle>
 
         {!error ? (
