@@ -27,8 +27,12 @@ export class ReservationController {
   async createReservation(
     @Body() createReservationDto: CreateReservationDto,
   ): Promise<Reservation> {
+    const { clientId } = createReservationDto;
+    const client = await this.clientService.getClientById(clientId);
+
     return await this.reservationService.createReservation(
       createReservationDto,
+      client,
     );
   }
 

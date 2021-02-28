@@ -14,4 +14,7 @@ export class CreateReservationDto {
   @IsNotEmpty()
   @IsIn(Object.values(ReservationPaymentMethod))
   paymentMethod;
+
+  @IsNotEmpty()
+  clientId;
 }

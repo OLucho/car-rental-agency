@@ -40,6 +40,9 @@ export class Reservation extends BaseEntity {
   })
   client: Client;
 
+  @Column()
+  clientId: number;
+
   @CreateDateColumn({ select: false })
   created_at: Date;
 
