@@ -21,7 +21,13 @@ const useStyles = makeStyles({
 export default function ReservationDetail({ id }) {
   const classes = useStyles();
   const history = useHistory();
-  const { reservation, getReservationById, deleteReservation, error } = useReservation();
+  const {
+    reservation,
+    getReservationById,
+    deleteReservation,
+    updateReservationStatus,
+    error,
+  } = useReservation();
   const { getClientById, client } = useClient();
   const { getCarById, car } = useCar();
 
@@ -35,14 +41,24 @@ export default function ReservationDetail({ id }) {
     try {
       deleteReservation(id);
       history.push('/reservations');
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleUpdateStatus = (status) => {
+    try {
+      updateReservationStatus(reservation.id, status);
+      history.push('/reservations');
+    } catch (err) {
+      console.log(err);
     }
   };
 
   if (error) {
     history.push('/reservations');
   }
+
   return (
     <Container>
       <div className={classes.title}>
@@ -149,11 +165,15 @@ export default function ReservationDetail({ id }) {
           </Button>
 
           {reservation.status === 'PENDING' ? (
-            <Button variant="contained" color="primary">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => handleUpdateStatus('PENDING')}
+            >
               Update Status: PAID
             </Button>
           ) : reservation.status === 'PAID' ? (
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" onClick={() => handleUpdateStatus('PAID')}>
               Update Status: FINISHED
             </Button>
           ) : null}

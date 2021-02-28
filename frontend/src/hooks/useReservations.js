@@ -56,6 +56,16 @@ export function ReservationProvider({ children }) {
       setError(err.response.data.message);
     }
   }, []);
+
+  const updateReservationStatus = useCallback(async (reservationId, status) => {
+    try {
+      const reservation = await api.patch(`/reservation/${reservationId}/status`, { status });
+      setStatus(`Reservation with id ${reservationId} status is now: ${reservation.data.status}`);
+    } catch (err) {
+      setError(err.response.data.message);
+    }
+  }, []);
+
   return (
     <ReservationContext.Provider
       value={{
@@ -72,6 +82,7 @@ export function ReservationProvider({ children }) {
         setReservation,
         updateReservation,
         setStatus,
+        updateReservationStatus,
       }}
     >
       {children}
@@ -82,7 +93,7 @@ export function ReservationProvider({ children }) {
 export function useReservation() {
   const context = useContext(ReservationContext);
   if (!context) {
-    throw new Error('use Auth must be used within a SearchProvider  ');
+    throw new Error('use Reservation must be used within a ReservationProvider  ');
   }
   return context;
 }
