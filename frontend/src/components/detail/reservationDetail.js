@@ -29,7 +29,7 @@ export default function ReservationDetail({ id }) {
     getReservationById(id);
     getClientById(reservation.clientId);
     getCarById(reservation.carId);
-  }, [id, getReservationById, getCarById, getClientById]);
+  }, [id, getReservationById, getCarById, getClientById, reservation.carId, reservation.clientId]);
 
   const handleDelete = () => {
     try {
@@ -43,7 +43,6 @@ export default function ReservationDetail({ id }) {
   if (error) {
     history.push('/reservations');
   }
-  console.log(car);
   return (
     <Container>
       <div className={classes.title}>
