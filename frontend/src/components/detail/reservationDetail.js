@@ -147,6 +147,16 @@ export default function ReservationDetail({ id }) {
           <Button variant="contained" color="secondary" onClick={handleDelete}>
             Delete Reservation
           </Button>
+
+          {reservation.status === 'PENDING' ? (
+            <Button variant="contained" color="primary">
+              Update Status: PAID
+            </Button>
+          ) : reservation.status === 'PAID' ? (
+            <Button variant="contained" color="primary">
+              Update Status: FINISHED
+            </Button>
+          ) : null}
         </div>
       </form>
     </Container>
