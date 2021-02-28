@@ -130,6 +130,16 @@ export default function ReservationDetail({ id }) {
             value={`${car.brand} ${car.model} ${car.year} $${car.price} `}
             fullWidth
           />
+
+          <TextField
+            inputProps={{ readOnly: true }}
+            margin="dense"
+            id="status"
+            label="Status"
+            type="text"
+            value={reservation.status}
+            fullWidth
+          />
         </DialogContent>
 
         <div className={classes.buttons}>
