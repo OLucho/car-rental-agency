@@ -1,9 +1,11 @@
 import { Exclude } from 'class-transformer';
+import { Reservation } from 'src/reservation/reservation.entity';
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -39,6 +41,11 @@ export class Car extends BaseEntity {
 
   @Column()
   air_conditioning: string;
+
+  @OneToMany(() => Reservation, (reservation) => reservation.car, {
+    eager: true,
+  })
+  reservations: Reservation[];
 
   @CreateDateColumn({ select: false })
   created_at: Date;

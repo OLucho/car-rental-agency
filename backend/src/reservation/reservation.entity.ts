@@ -1,3 +1,4 @@
+import { Car } from 'src/car/car.entity';
 import { Client } from 'src/client/client.entity';
 import {
   BaseEntity,
@@ -42,6 +43,14 @@ export class Reservation extends BaseEntity {
 
   @Column()
   clientId: number;
+
+  @ManyToOne(() => Car, (car) => car.reservations, {
+    eager: false,
+  })
+  car: Car;
+
+  @Column()
+  carId: number;
 
   @CreateDateColumn({ select: false })
   created_at: Date;
