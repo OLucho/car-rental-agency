@@ -68,6 +68,7 @@ export default function ReservationForm({ reservationToUpdate }) {
   const handleChange = (e) => {
     setReservation({ ...reservation, [e.target.id]: e.target.value });
   };
+  console.log(reservation);
   return (
     <div>
       <Button variant="contained" color="primary" onClick={handleClickOpen}>
@@ -135,6 +136,9 @@ export default function ReservationForm({ reservationToUpdate }) {
                   id: 'carId',
                 }}
               >
+                <option value="" selected disabled>
+                  Select a Car
+                </option>
                 {cars.map((car) => (
                   <option value={car.id}>
                     Brand: {car.brand}, Model: {car.model}, Year: {car.year}
@@ -154,6 +158,9 @@ export default function ReservationForm({ reservationToUpdate }) {
                   id: 'clientId',
                 }}
               >
+                <option value="" selected disabled>
+                  Select a Client
+                </option>
                 {clients.map((client) => (
                   <option value={client.id}>
                     Name: {client.firstName + ' ' + client.lastName}, DNI: {client.dni},
