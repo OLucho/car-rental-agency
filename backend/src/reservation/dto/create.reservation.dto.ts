@@ -17,4 +17,7 @@ export class CreateReservationDto {
 
   @IsNotEmpty()
   clientId;
+
+  @IsNotEmpty()
+  carId;
 }

@@ -10,6 +10,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { CarService } from 'src/car/car.service';
 import { ClientService } from 'src/client/client.service';
 import { CreateReservationDto } from './dto/create.reservation.dto';
 import { Reservation } from './reservation.entity';
@@ -20,6 +21,7 @@ export class ReservationController {
   constructor(
     private reservationService: ReservationService,
     private clientService: ClientService,
+    private carService: CarService,
   ) {}
 
   @Post()
@@ -27,12 +29,13 @@ export class ReservationController {
   async createReservation(
     @Body() createReservationDto: CreateReservationDto,
   ): Promise<Reservation> {
-    const { clientId } = createReservationDto;
+    const { clientId, carId } = createReservationDto;
     const client = await this.clientService.getClientById(clientId);
-
+    const car = await this.carService.getCarById(carId);
     return await this.reservationService.createReservation(
       createReservationDto,
       client,
+      car,
     );
   }
 

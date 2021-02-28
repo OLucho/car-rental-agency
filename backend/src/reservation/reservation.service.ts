@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Car } from 'src/car/car.entity';
 import { Client } from 'src/client/client.entity';
 import { CreateReservationDto } from './dto/create.reservation.dto';
 import { Reservation } from './reservation.entity';
@@ -15,6 +16,7 @@ export class ReservationService {
   async createReservation(
     createReservationDto: CreateReservationDto,
     client: Client,
+    car: Car,
   ): Promise<Reservation> {
     const { startDate, finishDate } = createReservationDto;
     const totalDays = this.calculateTotalDays(startDate, finishDate);
@@ -23,6 +25,7 @@ export class ReservationService {
       createReservationDto,
       totalDays,
       client,
+      car,
     );
     return reservation;
   }
