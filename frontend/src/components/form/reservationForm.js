@@ -7,15 +7,27 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useState } from 'react';
-import { useReservation } from '../../hooks/useReservations';
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  InputLabel,
+  NativeSelect,
+  Radio,
+  RadioGroup,
+} from '@material-ui/core';
 import AlertError from '../error';
-import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@material-ui/core';
+import { useReservation } from '../../hooks/useReservations';
+import { useCar } from '../../hooks/useCar';
+import { useClient } from '../../hooks/useClient';
 
 export default function ReservationForm({ reservationToUpdate }) {
   const initialState = {
     startDate: '',
     finishDate: '',
     pricePerDay: '',
+    carId: '',
+    clientId: '',
     paymentMethod: '',
   };
   const [open, setOpen] = useState(false);
@@ -24,10 +36,16 @@ export default function ReservationForm({ reservationToUpdate }) {
   );
   const history = useHistory();
   const { createReservation, error, setError, updateReservation } = useReservation();
+
+  const { getAllCars, cars } = useCar();
+  const { getAllClients, clients } = useClient();
+
   const handleClickOpen = () => {
     setError(false);
     setReservation(initialState);
     setOpen(true);
+    getAllCars();
+    getAllClients();
   };
 
   const handleClose = () => {
@@ -50,6 +68,7 @@ export default function ReservationForm({ reservationToUpdate }) {
   const handleChange = (e) => {
     setReservation({ ...reservation, [e.target.id]: e.target.value });
   };
+  console.log(reservation);
   return (
     <div>
       <Button variant="contained" color="primary" onClick={handleClickOpen}>
@@ -105,6 +124,45 @@ export default function ReservationForm({ reservationToUpdate }) {
               autoComplete="off"
               fullWidth
             />
+
+            <FormControl style={{ display: 'flex' }}>
+              <InputLabel shrink htmlFor="car-label">
+                Select a Car
+              </InputLabel>
+              <NativeSelect
+                onChange={handleChange}
+                inputProps={{
+                  name: 'carId',
+                  id: 'carId',
+                }}
+              >
+                {cars.map((car) => (
+                  <option value={car.id}>
+                    Brand: {car.brand}, Model: {car.model}, Year: {car.year}
+                  </option>
+                ))}
+              </NativeSelect>
+            </FormControl>
+
+            <FormControl style={{ display: 'flex' }}>
+              <InputLabel shrink htmlFor="car-label">
+                Select a Client
+              </InputLabel>
+              <NativeSelect
+                onChange={handleChange}
+                inputProps={{
+                  name: 'clientId',
+                  id: 'clientId',
+                }}
+              >
+                {clients.map((client) => (
+                  <option value={client.id}>
+                    Name: {client.firstName + ' ' + client.lastName}, DNI: {client.dni},
+                    Nationality: {client.nationality}
+                  </option>
+                ))}
+              </NativeSelect>
+            </FormControl>
 
             <FormControl component="fieldset">
               <FormLabel component="legend">Payment Method</FormLabel>

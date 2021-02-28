@@ -1,8 +1,10 @@
+import { Reservation } from 'src/reservation/reservation.entity';
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -32,6 +34,11 @@ export class Client extends BaseEntity {
 
   @Column()
   email: string;
+
+  @OneToMany(() => Reservation, (reservation) => reservation.client, {
+    eager: true,
+  })
+  reservations: Reservation[];
 
   @CreateDateColumn({ select: false })
   created_at: Date;

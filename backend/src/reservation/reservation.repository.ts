@@ -1,3 +1,5 @@
+import { Car } from 'src/car/car.entity';
+import { Client } from 'src/client/client.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateReservationDto } from './dto/create.Reservation.dto';
 import { Reservation, ReservationStatus } from './reservation.entity';
@@ -6,7 +8,9 @@ import { Reservation, ReservationStatus } from './reservation.entity';
 export class ReservationRepository extends Repository<Reservation> {
   async createReservation(
     createReservationDto: CreateReservationDto,
-    totalDays,
+    totalDays: number,
+    client: Client,
+    car: Car,
   ): Promise<Reservation> {
     const {
       finishDate,
@@ -23,6 +27,8 @@ export class ReservationRepository extends Repository<Reservation> {
     reservation.status = ReservationStatus.PENDING;
     reservation.totalPrice = pricePerDay * totalDays;
     reservation.totalDays = totalDays;
+    reservation.client = client;
+    reservation.car = car;
     await reservation.save();
     return reservation;
   }

@@ -14,7 +14,8 @@ import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
   table: {
-    minWidth: 650,
+    width: '90%',
+    margin: '1rem auto',
   },
   button: {
     textAlign: 'center',
@@ -28,6 +29,10 @@ const useStyles = makeStyles({
   th: {
     fontWeight: 'bold',
     fontSize: '1.1rem',
+    backgroundColor: 'lightblue',
+  },
+  td: {
+    backgroundColor: 'aliceblue',
   },
 });
 
@@ -35,8 +40,8 @@ export default function BasicTable({ thData, tbData, type }) {
   const classes = useStyles();
 
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
+    <TableContainer component={Paper} className={classes.table}>
+      <Table aria-label="simple table">
         <TableHead>
           <TableRow>
             {thData.map((th) => (
@@ -51,7 +56,9 @@ export default function BasicTable({ thData, tbData, type }) {
             <>
               <TableRow>
                 {item.map((row) => (
-                  <TableCell align="center">{row}</TableCell>
+                  <TableCell className={classes.td} align="center">
+                    {row}
+                  </TableCell>
                 ))}
                 <>
                   <div>
