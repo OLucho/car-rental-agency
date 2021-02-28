@@ -13,3 +13,10 @@
 - 🐘 **PostgreSQL** — A powerful RDBMS
 - ⚙️ **Cypress** - Testing E2E
 - ⚙️ **Jest** - Unit Testing
+
+## Screenshots
+
+![Car Form](https://github.com/OLucho/car-rental-agency/blob/master/docs/car-form.png?raw=true)
+![Clients Page](https://github.com/OLucho/car-rental-agency/blob/master/docs/clents-page.png?raw=true)
+![Reservation Detail Page](https://github.com/OLucho/car-rental-agency/blob/master/docs/reservation-form.png?raw=true)
+![Reservation DetailPage](https://github.com/OLucho/car-rental-agency/blob/master/docs/reservation-detail-page.png?raw=true)
