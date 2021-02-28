@@ -19,6 +19,7 @@ import {
 import AlertError from '../error';
 import { useReservation } from '../../hooks/useReservations';
 import { useCar } from '../../hooks/useCar';
+import { useClient } from '../../hooks/useClient';
 
 export default function ReservationForm({ reservationToUpdate }) {
   const initialState = {
@@ -37,12 +38,14 @@ export default function ReservationForm({ reservationToUpdate }) {
   const { createReservation, error, setError, updateReservation } = useReservation();
 
   const { getAllCars, cars } = useCar();
+  const { getAllClients, clients } = useClient();
 
   const handleClickOpen = () => {
     setError(false);
     setReservation(initialState);
     setOpen(true);
     getAllCars();
+    getAllClients();
   };
 
   const handleClose = () => {
@@ -136,6 +139,26 @@ export default function ReservationForm({ reservationToUpdate }) {
                 {cars.map((car) => (
                   <option value={car.id}>
                     Brand: {car.brand}, Model: {car.model}, Year: {car.year}
+                  </option>
+                ))}
+              </NativeSelect>
+            </FormControl>
+
+            <FormControl style={{ display: 'flex' }}>
+              <InputLabel shrink htmlFor="car-label">
+                Select a Client
+              </InputLabel>
+              <NativeSelect
+                onChange={handleChange}
+                inputProps={{
+                  name: 'clientId',
+                  id: 'clientId',
+                }}
+              >
+                {clients.map((client) => (
+                  <option value={client.id}>
+                    Name: {client.firstName + ' ' + client.lastName}, DNI: {client.dni},
+                    Nationality: {client.nationality}
                   </option>
                 ))}
               </NativeSelect>
