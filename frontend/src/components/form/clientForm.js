@@ -37,7 +37,7 @@ export default function ClientForm({ clientToUpdate }) {
     setOpen(false);
   };
 
-  const handleCreateClient = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (clientToUpdate) {
       updateClient(clientToUpdate.id, client);
@@ -71,7 +71,7 @@ export default function ClientForm({ clientToUpdate }) {
           <AlertError error={error} />
         )}
 
-        <form onSubmit={handleCreateClient}>
+        <form onSubmit={handleSubmit}>
           <DialogContent>
             <TextField
               autoFocus

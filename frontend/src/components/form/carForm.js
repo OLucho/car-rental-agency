@@ -38,7 +38,7 @@ export default function CarForm({ carToUpdate }) {
     setOpen(false);
   };
 
-  const handleCreateCar = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (carToUpdate) {
       updateCar(carToUpdate.id, car);
@@ -73,7 +73,7 @@ export default function CarForm({ carToUpdate }) {
           <AlertError error={error} />
         )}
 
-        <form onSubmit={handleCreateCar}>
+        <form onSubmit={handleSubmit}>
           <DialogContent>
             <TextField
               autoFocus
