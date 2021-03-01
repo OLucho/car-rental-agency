@@ -8,6 +8,7 @@ const mockCarService = () => ({
   getAllCars: jest.fn(),
   getCarById: jest.fn(),
   deleteCarById: jest.fn(),
+  updateCar: jest.fn(),
 });
 
 const createCarDto: CreateCarDto = {
@@ -55,6 +56,15 @@ describe('CarController', () => {
       await carController.getCarById(1);
       expect(carService.getCarById).toHaveBeenCalled();
       expect(carService.getCarById).toHaveBeenCalledWith(1);
+    });
+  });
+
+  describe('Update Car', () => {
+    it('Update car calls Service', async () => {
+      await carController.updateCar(1, createCarDto);
+
+      expect(carService.updateCar).toHaveBeenCalled();
+      expect(carService.updateCar).toHaveBeenCalledWith(1, createCarDto);
     });
   });
 

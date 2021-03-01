@@ -23,7 +23,6 @@ export class CarService {
     if (!car) {
       throw new NotFoundException('Car not found');
     }
-
     return car;
   }
   async updateCar(id: number, updateCarDto: CreateCarDto): Promise<Car> {
