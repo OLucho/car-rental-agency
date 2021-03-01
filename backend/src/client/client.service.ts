@@ -32,7 +32,7 @@ export class ClientService {
     return this.clientRepository.updateClient(client, updateClientDto);
   }
 
-  async deleteClientById(id: number) {
+  async deleteClientById(id: number): Promise<void> {
     const result = await this.clientRepository.delete(id);
 
     if (result.affected === 0) {

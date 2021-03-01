@@ -43,7 +43,7 @@ export class CarController {
   }
 
   @Delete('/:id')
-  async deleteCarById(@Param('id', ParseIntPipe) id: number) {
+  async deleteCarById(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return await this.carService.deleteCarById(id);
   }
 }

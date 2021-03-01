@@ -31,7 +31,7 @@ export class CarService {
     return this.carRepository.updateCar(car, updateCarDto);
   }
 
-  async deleteCarById(id: number) {
+  async deleteCarById(id: number): Promise<void> {
     const result = await this.carRepository.delete(id);
 
     if (result.affected === 0) {

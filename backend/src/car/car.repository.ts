@@ -36,7 +36,7 @@ export class CarRepository extends Repository<Car> {
     return query.getMany();
   }
 
-  async updateCar(car: Car, updateCarDto: CreateCarDto) {
+  async updateCar(car: Car, updateCarDto: CreateCarDto): Promise<Car> {
     const {
       air_conditioning,
       brand,

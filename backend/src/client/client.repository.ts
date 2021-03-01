@@ -32,7 +32,10 @@ export class ClientRepository extends Repository<Client> {
     return query.getMany();
   }
 
-  async updateClient(client: Client, updateClientDto: CreateClientDto) {
+  async updateClient(
+    client: Client,
+    updateClientDto: CreateClientDto,
+  ): Promise<Client> {
     const {
       address,
       dni,

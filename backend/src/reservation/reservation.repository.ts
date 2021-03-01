@@ -41,7 +41,7 @@ export class ReservationRepository extends Repository<Reservation> {
   async updateReservation(
     reservation: Reservation,
     updateReservationDto: CreateReservationDto,
-  ) {
+  ): Promise<Reservation> {
     const {
       finishDate,
       paymentMethod,

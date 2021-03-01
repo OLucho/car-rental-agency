@@ -59,7 +59,7 @@ export class ReservationService {
     );
   }
 
-  async deleteReservationById(id: number) {
+  async deleteReservationById(id: number): Promise<void> {
     const result = await this.reservationRepository.delete(id);
 
     if (result.affected === 0) {
@@ -70,7 +70,7 @@ export class ReservationService {
   async updateReservationStatus(
     reservation: Reservation,
     status: ReservationStatus,
-  ) {
+  ): Promise<Reservation> {
     if (status === ReservationStatus.PENDING) {
       return this.pay(reservation, status);
     } else if (status === ReservationStatus.PAID) {
@@ -79,7 +79,10 @@ export class ReservationService {
     return reservation;
   }
 
-  private async pay(reservation: Reservation, status: ReservationStatus) {
+  private async pay(
+    reservation: Reservation,
+    status: ReservationStatus,
+  ): Promise<Reservation> {
     if (reservation.status === status) {
       reservation.status = ReservationStatus.PAID;
     }
@@ -87,7 +90,10 @@ export class ReservationService {
     return reservation;
   }
 
-  private async finish(reservation: Reservation, status: ReservationStatus) {
+  private async finish(
+    reservation: Reservation,
+    status: ReservationStatus,
+  ): Promise<Reservation> {
     if (reservation.status !== status) {
       throw new MethodNotAllowedException('Reservation is not paid');
     }
@@ -96,7 +102,7 @@ export class ReservationService {
     return reservation;
   }
 
-  private calculateTotalDays(startDate, finishDate) {
+  private calculateTotalDays(startDate: string, finishDate: string): number {
     const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
     const firstDate = new Date(startDate);
     const secondDate = new Date(finishDate); // "year,month,day" => FORMAT

@@ -67,7 +67,7 @@ export class ReservationController {
   async updateReservationStatus(
     @Param('id', ParseIntPipe) id: number,
     @Body('status') status: ReservationStatus,
-  ) {
+  ): Promise<Reservation> {
     const reservation = await this.reservationService.getReservationById(id);
     return await this.reservationService.updateReservationStatus(
       reservation,
@@ -76,7 +76,9 @@ export class ReservationController {
   }
 
   @Delete('/:id')
-  async deleteReservationById(@Param('id', ParseIntPipe) id: number) {
+  async deleteReservationById(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<void> {
     return await this.reservationService.deleteReservationById(id);
   }
 }

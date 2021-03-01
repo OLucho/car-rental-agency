@@ -45,7 +45,7 @@ export class ClientController {
   }
 
   @Delete('/:id')
-  async deleteClientById(@Param('id', ParseIntPipe) id: number) {
+  async deleteClientById(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return await this.clientService.deleteClientById(id);
   }
 }
