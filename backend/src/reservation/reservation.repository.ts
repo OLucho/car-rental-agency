@@ -37,4 +37,22 @@ export class ReservationRepository extends Repository<Reservation> {
     const query = this.createQueryBuilder('Reservation');
     return query.getMany();
   }
+
+  async updateReservation(
+    reservation: Reservation,
+    updateReservationDto: CreateReservationDto,
+  ) {
+    const {
+      finishDate,
+      paymentMethod,
+      pricePerDay,
+      startDate,
+    } = updateReservationDto;
+    reservation.startDate = startDate;
+    reservation.finishDate = finishDate;
+    reservation.paymentMethod = paymentMethod;
+    reservation.pricePerDay = pricePerDay;
+    await reservation.save();
+    return reservation;
+  }
 }

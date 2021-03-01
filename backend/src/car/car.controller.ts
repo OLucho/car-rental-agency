@@ -38,7 +38,8 @@ export class CarController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateCarDto: CreateCarDto,
   ): Promise<Car> {
-    return await this.carService.updateCar(id, updateCarDto);
+    const car = await this.carService.getCarById(id);
+    return await this.carService.updateCar(car, updateCarDto);
   }
 
   @Delete('/:id')

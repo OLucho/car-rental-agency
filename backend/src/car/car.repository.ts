@@ -35,4 +35,30 @@ export class CarRepository extends Repository<Car> {
     const query = this.createQueryBuilder('car');
     return query.getMany();
   }
+
+  async updateCar(car: Car, updateCarDto: CreateCarDto) {
+    const {
+      air_conditioning,
+      brand,
+      color,
+      image,
+      kms,
+      model,
+      passengers,
+      price,
+      year,
+    } = updateCarDto;
+
+    car.air_conditioning = air_conditioning;
+    car.brand = brand;
+    car.color = color;
+    car.image = image;
+    car.model = model;
+    car.kms = kms;
+    car.passengers = passengers;
+    car.price = price;
+    car.year = year;
+    await car.save();
+    return car;
+  }
 }

@@ -31,4 +31,26 @@ export class ClientRepository extends Repository<Client> {
     const query = this.createQueryBuilder('Client');
     return query.getMany();
   }
+
+  async updateClient(client: Client, updateClientDto: CreateClientDto) {
+    const {
+      address,
+      dni,
+      email,
+      firstName,
+      lastName,
+      nationality,
+      phoneNumber,
+    } = updateClientDto;
+
+    client.address = address;
+    client.dni = dni;
+    client.email = email;
+    client.firstName = firstName;
+    client.lastName = lastName;
+    client.nationality = nationality;
+    client.phoneNumber = phoneNumber;
+    await client.save();
+    return client;
+  }
 }

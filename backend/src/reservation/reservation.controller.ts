@@ -56,8 +56,9 @@ export class ReservationController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateReservationDto: CreateReservationDto,
   ): Promise<Reservation> {
+    const reservation = await this.reservationService.getReservationById(id);
     return await this.reservationService.updateReservation(
-      id,
+      reservation,
       updateReservationDto,
     );
   }

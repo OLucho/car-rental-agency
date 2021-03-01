@@ -40,7 +40,8 @@ export class ClientController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateClientDto: CreateClientDto,
   ): Promise<Client> {
-    return await this.clientService.updateClient(id, updateClientDto);
+    const client = await this.getClientById(id);
+    return await this.clientService.updateClient(client, updateClientDto);
   }
 
   @Delete('/:id')

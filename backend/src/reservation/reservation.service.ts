@@ -1,6 +1,5 @@
 import {
   Injectable,
-  InternalServerErrorException,
   MethodNotAllowedException,
   NotFoundException,
 } from '@nestjs/common';
@@ -51,22 +50,13 @@ export class ReservationService {
   }
 
   async updateReservation(
-    id: number,
+    reservation: Reservation,
     updateReservationDto: CreateReservationDto,
   ): Promise<Reservation> {
-    const {
-      finishDate,
-      paymentMethod,
-      pricePerDay,
-      startDate,
-    } = updateReservationDto;
-    const reservation = await this.getReservationById(id);
-    reservation.startDate = startDate;
-    reservation.finishDate = finishDate;
-    reservation.paymentMethod = paymentMethod;
-    reservation.pricePerDay = pricePerDay;
-    await reservation.save();
-    return reservation;
+    return this.reservationRepository.updateReservation(
+      reservation,
+      updateReservationDto,
+    );
   }
 
   async deleteReservationById(id: number) {
